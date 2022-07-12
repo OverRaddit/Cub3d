@@ -6,11 +6,25 @@
 /*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 22:02:02 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/12 20:51:00 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/12 22:19:07 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
+char	*update_map(char *s1, char *s2)
+{
+	char	*temp;
+	char	*result;
+
+	if (s1 == NULL)
+		s1 = ft_strdup("");
+	temp = ft_strjoin(s1, "\n");
+	result = ft_strjoin(temp, s2);
+	free(s1);
+	free(temp);
+	return (result);
+}
 
 static int	save_data(t_map *map, int g_ret, int identifier, char *line)
 {
@@ -33,6 +47,9 @@ static int	save_data(t_map *map, int g_ret, int identifier, char *line)
 	//맵 저장
 	else
 	{
+		map->tmp_map_malloc = update_map(map->tmp_map_malloc, line);
+		if (g_ret == 0 && parse_map(map) == ERROR)
+			return (free_memory_return(line, ERROR));
 	}
 	return SUCCESS;
 }
