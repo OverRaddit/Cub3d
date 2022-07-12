@@ -6,7 +6,7 @@
 /*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/12 20:49:52 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/12 22:19:02 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct	s_map
 	t_texture	tex[4];
 	int			floor_color;
 	int			ceiling_color;
-	char		*temp_map;
+	char		*tmp_map_malloc;
 	char		**map;
 	int			row;
 	int			col;
