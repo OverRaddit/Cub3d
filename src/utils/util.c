@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/12 16:47:09 by jinyoo           ###   ########.fr       */
+/*   Created: 2022/07/12 17:46:48 by jinyoo            #+#    #+#             */
+/*   Updated: 2022/07/12 17:49:29 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
-int	main(int argc, char *argv[])
+int	is_upper(char c)
 {
-	t_map	map;
+	if (c >= 'A' && c <= 'Z')
+		return (TRUE);
+	return (FALSE);
+}
 
-	if (argc != 2)
-		ft_putendl_fd("Error", 2);
-	else
-	{
-		ft_memset(&map, 0, sizeof(t_map));
-		parse(&map, argv[1]);
-	}
-	return 0;
+int	is_space(char c)
+{
+	if (c == ' ')
+		return (TRUE);
+	return (FALSE);
 }

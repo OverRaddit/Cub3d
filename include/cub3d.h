@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/11 22:14:15 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/12 20:49:52 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define KEY_ESC 53
 
 # define ERROR -1
+# define SUCCESS 1
+
 # define NO 0
 # define SO 1
 # define WE 2
@@ -38,6 +40,9 @@
 # define FLOOR 4
 # define CEIL 5
 # define MAP 6
+
+# define FALSE 0
+# define TRUE 1
 
 typedef struct	s_texture
 {
@@ -47,7 +52,7 @@ typedef struct	s_texture
 	double		height;
 }	t_texture;
 
-typedef struct	s_parse
+typedef struct	s_map
 {
 	t_texture	tex[4];
 	int			floor_color;
@@ -56,7 +61,25 @@ typedef struct	s_parse
 	char		**map;
 	int			row;
 	int			col;
-}	t_parse;
+}	t_map;
+
+//error.c
+void	exit_error(char *message);
+
+//parse.c
+int	parse(t_map *map, const char *cub_file_path);
+
+//validation.c
+int	is_cub_file(const char *cub_file_path);
+int	check_valid_data(char *line);
+
+//parse_color.c
+char	*access_information(char *line);
+int	parse_color(char *line);
+
+// util.c
+int	is_upper(char c);
+int	is_space(char c);
 
 //=============================================================================
 // Gshim
