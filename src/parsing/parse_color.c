@@ -6,7 +6,7 @@
 /*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 20:48:27 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/12 20:49:59 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/12 22:16:29 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	parse_color_handler(char *line)
 	while (line[++i] && ft_isdigit(line[i]))
 		b = b * 10 + (line[i] - '0');
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		exit_error("Wrong RGB range");
+		exit_error("Invalid RGB Format");
 	color = (r * 256 * 256) + (g * 256) + b;
 	return (color);
 }
