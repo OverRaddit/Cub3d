@@ -3,16 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jinyoo <jinyoo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 22:02:02 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/12 22:19:07 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/13 18:30:32 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-char	*update_map(char *s1, char *s2)
+static void	parse_map(t_map *map)
+{
+	// int row;
+	// int col;
+
+	map->map = ft_split(map->tmp_map_malloc, '\n');
+	if(map->map == NULL)
+		exit_error(NULL);
+	// row = -1;
+	// col = 0;
+	// while (map->map[++row] != NULL)
+	// 	if ((int)ft_strlen(map->map[row]) > col)
+	// 		col = (int)ft_strlen(map->map[row]);
+	// map->row = row;
+	// map->col = col;
+	free(map->tmp_map_malloc);
+	map->tmp_map_malloc = NULL;
+}
+
+static char	*save_map(char *s1, char *s2)
 {
 	char	*temp;
 	char	*result;
@@ -26,7 +45,7 @@ char	*update_map(char *s1, char *s2)
 	return (result);
 }
 
-static int	save_data(t_map *map, int g_ret, int identifier, char *line)
+static void	save_data(t_map *map, int g_ret, int identifier, char *line)
 {
 	char	*tex_path;
 
@@ -35,7 +54,7 @@ static int	save_data(t_map *map, int g_ret, int identifier, char *line)
 		if (map->tex[identifier].tex_path)
 			exit_error("Duplicated Identifier");
 		tex_path = access_information(line);
-		map->tex[identifier].tex_path = tex_path;
+		map->tex[identifier].tex_path = ft_strdup(tex_path);
 	}
 	else if (identifier == CEIL || identifier == FLOOR)
 	{
@@ -44,40 +63,50 @@ static int	save_data(t_map *map, int g_ret, int identifier, char *line)
 		else
 			map->floor_color = parse_color(line);
 	}
-	//맵 저장
 	else
 	{
-		map->tmp_map_malloc = update_map(map->tmp_map_malloc, line);
-		if (g_ret == 0 && parse_map(map) == ERROR)
-			return (free_memory_return(line, ERROR));
+		map->tmp_map_malloc = save_map(map->tmp_map_malloc, line);
+		if (g_ret == 0)
+			parse_map(map);
 	}
-	return SUCCESS;
 }
 
-int	parse(t_map *map, const char *cub_file_path)
+static int	get_cub_file_fd(char *cub_file_path)
 {
 	int		fd;
-	char	*line;
-	int		identifier;
 
 	if (!is_cub_file(cub_file_path))
 		exit_error("Invalid File Extension");
 	fd = open(cub_file_path, O_RDONLY);
 	if (fd == -1)
 		exit_error("Cannot Open File");
-	while (get_next_line(fd, &line) > 0)
+	return fd;
+}
+
+void	parse(t_map *map, char *cub_file_path)
+{
+	int		fd;
+	int		gnl_ret;
+	char	*line;
+	int		identifier;
+
+	fd = get_cub_file_fd(cub_file_path);
+	gnl_ret = get_next_line(fd, &line);
+	while (gnl_ret > 0)
 	{
-		if (line[0] == '\0')
-			continue ;
-		identifier = check_valid_data(line);
-		if (identifier == ERROR)
-			exit_error("Invalid Identifier");
-		if (save_data(map, 1, identifier, line) == ERROR)
-			return (ERROR);
+		if (line[0] != '\0')
+		{
+			identifier = check_valid_data(line);
+			if (identifier == ERROR)
+				exit_error("Unacceptable Data Founded");
+			save_data(map, gnl_ret, identifier, line);
+		}
 		free(line);
+		line = NULL;
+		gnl_ret = get_next_line(fd, &line);
 	}
-	save_data(map, 0, identifier, line);
+	if (gnl_ret != ERROR)
+		save_data(map, gnl_ret, identifier, line);
 	close(fd);
 	free(line);
-	return (SUCCESS);
 }

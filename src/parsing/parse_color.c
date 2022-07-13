@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jinyoo <jinyoo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 20:48:27 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/12 22:16:29 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/13 16:06:47 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ static int	parse_color_handler(char *line)
 	int	color;
 
 	i = -1;
+	r = 0;
+	g = 0;
+	b = 0;
 	while (line[++i] && ft_isdigit(line[i]))
 		r = r * 10 + (line[i] - '0');
 	while (line[++i] && ft_isdigit(line[i]))
@@ -45,7 +48,6 @@ static int	parse_color_handler(char *line)
 int	parse_color(char *line)
 {
 	int		color;
-	char	**color_malloc;
 
 	line = access_information(line);
 	color = parse_color_handler(line);
