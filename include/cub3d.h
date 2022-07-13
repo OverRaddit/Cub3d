@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jinyoo <jinyoo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/12 22:19:02 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/13 15:28:52 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ typedef struct	s_map
 void	exit_error(char *message);
 
 //parse.c
-int	parse(t_map *map, const char *cub_file_path);
+void	parse(t_map *map, char *cub_file_path);
 
 //validation.c
-int	is_cub_file(const char *cub_file_path);
+int	is_cub_file(char *cub_file_path);
 int	check_valid_data(char *line);
 
 //parse_color.c

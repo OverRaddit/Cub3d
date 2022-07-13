@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jinyoo <jinyoo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:57:49 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/12 17:00:06 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/13 16:31:25 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int	check_possible_chars(char *possible_chars, char c)
 	i = 0;
 	while (possible_chars[i])
 	{
-		if (possible_chars[i] != c)
-			return (FALSE);
+		if (possible_chars[i] == c)
+			return (TRUE);
 		i++;
 	}
-	return (TRUE);
+	return (FALSE);
 }
 
 static int	is_map_valid(char *line)
@@ -59,7 +59,7 @@ int	check_valid_data(char *line)
 	return (ERROR);
 }
 
-int	is_cub_file(const char *cub_file_path)
+int	is_cub_file(char *cub_file_path)
 {
 	int	file_len;
 	int	is_same;
