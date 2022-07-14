@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:57:49 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/13 16:31:25 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/14 20:41:47 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	check_valid_data(char *line)
 	return (ERROR);
 }
 
-int	is_cub_file(char *cub_file_path)
+static int	is_cub_file(char *cub_file_path)
 {
 	int	file_len;
 	int	is_same;
@@ -70,4 +70,16 @@ int	is_cub_file(char *cub_file_path)
 	else
 		is_same = FALSE;
 	return (is_same);
+}
+
+int	get_cub_file_fd(char *cub_file_path)
+{
+	int		fd;
+
+	if (!is_cub_file(cub_file_path))
+		exit_error("Invalid File Extension");
+	fd = open(cub_file_path, O_RDONLY);
+	if (fd == -1)
+		exit_error("Cannot Open File");
+	return fd;
 }

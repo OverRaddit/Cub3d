@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jinyoo <jinyoo@student.42.fr>              +#+  +:+       +#+         #
+#    By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 21:25:08 by jinyoo            #+#    #+#              #
-#    Updated: 2022/07/13 15:56:34 by jinyoo           ###   ########.fr        #
+#    Updated: 2022/07/14 20:39:05 by jinyoo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS_DIR = src
 SRCS =	src/main.c \
 		src/error/error.c \
 		src/parsing/parse_color.c \
+		src/parsing/parse_map.c \
 		src/parsing/parse.c \
 		src/parsing/validation.c \
 		src/utils/util.c
