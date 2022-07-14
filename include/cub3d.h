@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/13 15:28:52 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/14 21:24:48 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # define KEY_UP 126
 # define KEY_DOWN 125
 # define KEY_ESC 53
+# define KEY_A			0
+# define KEY_S			1
+# define KEY_D			2
+# define KEY_W			13
 
 # define ERROR -1
 # define SUCCESS 1
@@ -85,6 +89,45 @@ int	is_space(char c);
 // Gshim
 //=============================================================================
 
+#define _USE_MATH_DEFINES
+# include <math.h>
 
+typedef struct s_game
+{
+	void	*mlx;
+	void	*win;
+	// t_img	img;
+	// t_img	tile;
+	// t_img	item;
+	char		map[10][10] =
+	{
+		"1111111111",
+		"1000000001",
+		"1000000001",
+		"1000000001",
+		"1000000001",
+		"1000000001",
+		"1000000001",
+		"1000000001",
+		"1000000001",
+		"1111111111"
+	};
+
+	// player data
+	double	px;
+	double	py;
+	double	dirx;
+	double	diry;
+}				t_game;
+
+# define SCREEN_WIDTH	640
+# define SCREEN_HEIGHT	480
+# define M_UNIT			10		// 이동단위
+# define R_UNIT			10		// 회전단위
+
+void	window_init(t_game *game);
+void	move(t_game *game, double angle);
+void	rotate(t_game *game, double angle);
+int		deal_key(int key_code, t_game *game);
 
 #endif

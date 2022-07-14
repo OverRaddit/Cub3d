@@ -6,52 +6,66 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/11 21:50:50 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/14 21:38:29 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	move(t_game *game, int x2, int y2)
+//=========================
+// 현재 사용하는 map은 임시 더미맵이다. 파싱한 맵이 아니다.
+//=========================
+static int moveable(t_game *game, double nx, double ny)
 {
-	if (game->map[y2][x2] == '1')
-		return ;
-	else if (game->map[y2][x2] == 'C')
-	{
-		game->map[y2][x2] = '0';
-		game->point++;
-	}
-	else if (game->map[y2][x2] == 'E' && game->point == game->goal)
-		closed(1);
-	if (game->map[game->pos_y][game->pos_x] == '0' ||
-			game->map[game->pos_y][game->pos_x] == 'C')
-		mlx_put_image_to_window_scale(game->mlx, game->win, game->tile.img,
-			0 * 32, 0 * 32, 32, 32,
-			game->pos_x * 64, game->pos_y * 64, 64, 64, 0xFFFFFF);
-	else if (game->map[game->pos_y][game->pos_x] == 'E')
-		mlx_put_image_to_window_scale(game->mlx, game->win, game->item.img,
-			5 + 5 * 20, 5 + 5 * 20, 18, 18,
-			game->pos_x * 64, game->pos_y * 64, 64, 64, 0xFFFFFF);
-	game->pos_x = x2;
-	game->pos_y = y2;
-	game->cnt++;
+	if (game->map[(int)ny][(int)nx] > 0)
+		return 0;
+	else
+		return 1;
 }
 
-int	deal_key(int key_code, t_game *game)
+void	move(t_game *game, double angle)
+{
+	double nx,ny;
+
+	// 이동할 좌표를 구한다.
+	nx = game->px + (game->dirx * cos(angle) - game->diry * sin(angle)) * M_UNIT;
+	ny = game->py + (game->dirx * sin(angle) + game->diry * cos(angle)) * M_UNIT;
+
+	// 이동할 수 있는 좌표인지 검증 후 최신화한다.
+	if (!moveable(game, nx, ny))
+		return ;
+	game->px = nx;
+	game->py = ny;
+}
+
+void	rotate(t_game *game, double angle)
+{
+	// 플레이어의 방향벡터를 최신화한다.
+	game->dirx += game->dirx * cos(angle) - game->diry * sin(angle);
+	game->diry += game->dirx * sin(angle) - game->diry * cos(angle);
+
+	// 카메라 평면을 어떻게.....?
+}
+
+int		deal_key(int key_code, t_game *game)
 {
 	if (key_code == KEY_ESC)
 		closed(3);
 	if (key_code == KEY_UP || key_code == KEY_W)
-		move(game, game->pos_x, game->pos_y - 1);
+		move(game, 0);
 	else if (key_code == KEY_DOWN || key_code == KEY_S)
-		move(game, game->pos_x, game->pos_y + 1);
-	else if (key_code == KEY_LEFT || key_code == KEY_A)
-		move(game, game->pos_x - 1, game->pos_y);
-	else if (key_code == KEY_RIGHT || key_code == KEY_S)
-		move(game, game->pos_x + 1, game->pos_y);
-	mlx_put_image_to_window_scale(game->mlx, game->win, game->img.img,
-		1 * 32, 4 * 32, 32, 32,
-		game->pos_x * 64, game->pos_y * 64, 64, 64, 0xFFFFFF);
-	print_status(game);
+		move(game, M_PI);
+	else if (key_code == KEY_A)
+		move(game, M_PI_2);
+	else if (key_code == KEY_D)
+		move(game, -M_PI_2);
+	else if (key_code == KEY_RIGHT)
+		rotate(game, -R_UNIT);
+	else if (key_code == KEY_LEFT)
+		rotate(game, R_UNIT);
+	// mlx_put_image_to_window_scale(game->mlx, game->win, game->img.img,
+	// 	1 * 32, 4 * 32, 32, 32,
+	// 	game->px * 64, game->py * 64, 64, 64, 0xFFFFFF);
+	// print_status(game);
 	return (0);
 }
