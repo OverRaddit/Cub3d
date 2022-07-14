@@ -6,7 +6,7 @@
 #    By: gshim <gshim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 21:25:08 by jinyoo            #+#    #+#              #
-#    Updated: 2022/07/14 20:34:03 by gshim            ###   ########.fr        #
+#    Updated: 2022/07/14 21:58:45 by gshim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS_DIR = src
 SRCS =	src/main.c \
 		src/error/error.c \
 		src/parsing/parse_color.c \
+		src/parsing/parse_map.c \
 		src/parsing/parse.c \
 		src/parsing/validation.c \
 		src/utils/util.c \

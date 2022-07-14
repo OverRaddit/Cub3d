@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/14 21:23:08 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/14 21:58:38 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,16 @@ int	main(int argc, char *argv[])
 		ft_memset(&map, 0, sizeof(t_map));
 		parse(&map, argv[1]);
 		for (int i = 0;i < 4;i++)
-			printf("tex_path : %s\n", map.tex[i].tex_path);
+			printf("tex_path : %s\n", map.tex[i].tex_path_malloc);
 		printf("\n");
 		printf("ceilling color: %#x\n", map.ceiling_color);
 		printf("floor color: %#x\n", map.floor_color);
 		int y = -1;
-		while (map.map[++y])
+		while (map.map_malloc[++y])
 		{
 			int x = -1;
-			while (map.map[y][++x])
-				printf("%c", map.map[y][x]);
+			while (map.map_malloc[y][++x])
+				printf("%c", map.map_malloc[y][x]);
 			printf("\n");
 		}
 	}
