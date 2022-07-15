@@ -49,6 +49,8 @@ int	parse_color(char *line)
 {
 	int		color;
 
+	if (line[0] == '\0')
+		exit_error("Invalid Map");
 	line = access_information(line);
 	color = parse_color_handler(line);
 	return (color);

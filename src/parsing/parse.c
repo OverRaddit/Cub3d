@@ -54,6 +54,8 @@ void	parse(t_map *map, char *cub_file_path)
 				exit_error("Invalid Data Founded");
 			save_data(map, FALSE, identifier, line);
 		}
+		else if (map->tmp_map_malloc != NULL)
+			exit_error("Map Content Cannot Have Empty Line");
 		free(line);
 	}
 	save_data(map, TRUE, identifier, line);
