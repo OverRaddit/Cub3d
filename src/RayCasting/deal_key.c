@@ -3,22 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   deal_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/15 12:38:14 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/16 20:38:34 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+extern int worldMap[24][24];
 
 //=========================
 // 현재 사용하는 map은 임시 더미맵이다. 파싱한 맵이 아니다.
 //=========================
 static int moveable(t_game *game, double nx, double ny)
 {
-	if (game->map[(int)ny][(int)nx] > 0)
+	(void)game;
+	// 맵 검증이 완벽하다면 인덱스 체크는 필요없다.
+	if (ny < 0 || nx < 0 || ny > 24 || nx > 24)
+	{
+		printf("Out of Index\n");
 		return 0;
+	}
+	if (worldMap[(int)nx][(int)ny] > 0)
+	{
+		printf("(%d, %d) is wall\n", (int)nx, (int)ny);
+		return 0;
+	}
 	else
 		return 1;
 }
@@ -28,6 +40,9 @@ void	move(t_game *game, double angle)
 	double nx,ny;
 
 	// 이동할 좌표를 구한다.
+	(void)angle;
+	// nx = game->pX + game->dirX * M_UNIT;
+	// ny = game->pY + game->dirY * M_UNIT;
 	nx = game->pX + (game->dirX * cos(angle) - game->dirY * sin(angle)) * M_UNIT;
 	ny = game->pY + (game->dirX * sin(angle) + game->dirY * cos(angle)) * M_UNIT;
 
@@ -38,13 +53,22 @@ void	move(t_game *game, double angle)
 	game->pY = ny;
 }
 
-void	rotate(t_game *game, double angle)
+void	rotate(t_game *g, double angle)
 {
+	double tempX,tempY;
+
 	// 플레이어의 방향벡터를 최신화한다.
-	game->dirX += game->dirX * cos(angle) - game->dirY * sin(angle);
-	game->dirY += game->dirX * sin(angle) - game->dirY * cos(angle);
+	tempX = g->dirX;
+	tempY = g->dirY;
+	g->dirX = tempX * cos(angle) - tempY * sin(angle);
+	g->dirY = tempX * sin(angle) + tempY * cos(angle);
 
 	// 카메라 평면을 어떻게.....?
+	tempX = g->planeX;
+	tempY = g->planeY;
+	g->planeX = tempX * cos(angle) - tempY * sin(angle);
+	g->planeY = tempX * sin(angle) + tempY * cos(angle);
+
 }
 
 int		deal_key(int key_code, t_game *game)

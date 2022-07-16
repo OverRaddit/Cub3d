@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/16 15:33:23 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/16 20:40:28 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,12 +157,22 @@ typedef struct s_raycasting
 
 # define SCREEN_WIDTH	640
 # define SCREEN_HEIGHT	480
-# define M_UNIT			10		// 이동단위
-# define R_UNIT			10		// 회전단위
+# define M_UNIT			0.1		// 이동단위
+//# define R_UNIT			M_PI_4	// 회전단위
+# define R_UNIT			M_PI / 180	// 회전단위
+
+// color
+//# define RGB_Red 255*65536+255*256+255
+# define RGB_Red 255*65536+0+0
+# define RGB_Green 0*65536+255*256+0
+# define RGB_Blue 0*65536+0*256+255
+# define RGB_White 255*65536+255*256+255
+# define RGB_Yellow 255*65536+255*256+0
 
 void	window_init(t_game *game);
 void	move(t_game *game, double angle);
 void	rotate(t_game *game, double angle);
 int		deal_key(int key_code, t_game *game);
+
 
 #endif
