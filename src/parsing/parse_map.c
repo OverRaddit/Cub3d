@@ -6,7 +6,7 @@
 /*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:33:59 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/14 20:45:20 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/15 17:09:12 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	parse_map(t_map *map)
 	int	col;
 
 	map->map_malloc = ft_split(map->tmp_map_malloc, '\n');
-	if(map->map_malloc == NULL)
+	if (map->map_malloc == NULL)
 		exit_error(NULL);
 	row = -1;
 	col = 0;

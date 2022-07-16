@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/15 12:52:21 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/16 15:33:23 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,18 @@ typedef struct	s_texture
 	double		height;
 }	t_texture;
 
+typedef struct	s_player
+{
+	int		px;
+	int		py;
+	double	dirx;
+	double	diry;
+	char	starting_sight;
+}	t_player;
+
 typedef struct	s_map
 {
+	t_player	player;
 	t_texture	tex[4];
 	int			floor_color;
 	int			ceiling_color;
@@ -69,10 +79,7 @@ typedef struct	s_map
 	char		**map_malloc;
 	int			row;
 	int			col;
-	char		starting_sight;
 }	t_map;
-
-// 플레이어 구조체에 초기 x,y
 
 //error.c
 void	exit_error(char *message);
@@ -94,6 +101,9 @@ int	parse_color(char *line);
 void	parse_map(t_map *map);
 char	*save_tmp_map(char *s1, char *s2);
 int	check_data_order(t_map *map);
+
+//setting.c
+void	map_setting(t_map *map);
 
 //=============================================================================
 
@@ -143,7 +153,7 @@ typedef struct s_raycasting
 	int		stepY;
 	int		hit;
 	int		side;
-}		t_raycasting
+}		t_raycasting;
 
 # define SCREEN_WIDTH	640
 # define SCREEN_HEIGHT	480
