@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/14 22:03:37 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/15 12:52:21 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,25 +116,34 @@ typedef struct s_game
 	// t_img	img;
 	// t_img	tile;
 	// t_img	item;
-	// char		map[10][10] = {
-	// 	"1111111111",
-	// 	"1000000001",
-	// 	"1000000001",
-	// 	"1000000001",
-	// 	"1000000001",
-	// 	"1000000001",
-	// 	"1000000001",
-	// 	"1000000001",
-	// 	"1000000001",
-	// 	"1111111111"
-	// };
+	char		map[10][10];
 
-	// player data
-	double	px;
-	double	py;
-	double	dirx;
-	double	diry;
+	// player's Pos, Dir, cameraDir(right)
+	double	pX;
+	double	pY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
 }				t_game;
+
+typedef struct s_raycasting
+{
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	int		mapX;
+	int		mapY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		stepX;
+	int		stepY;
+	int		hit;
+	int		side;
+}		t_raycasting
 
 # define SCREEN_WIDTH	640
 # define SCREEN_HEIGHT	480

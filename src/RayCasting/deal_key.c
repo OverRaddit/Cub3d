@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   deal_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/14 21:38:29 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/15 12:38:14 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,29 @@ void	move(t_game *game, double angle)
 	double nx,ny;
 
 	// 이동할 좌표를 구한다.
-	nx = game->px + (game->dirx * cos(angle) - game->diry * sin(angle)) * M_UNIT;
-	ny = game->py + (game->dirx * sin(angle) + game->diry * cos(angle)) * M_UNIT;
+	nx = game->pX + (game->dirX * cos(angle) - game->dirY * sin(angle)) * M_UNIT;
+	ny = game->pY + (game->dirX * sin(angle) + game->dirY * cos(angle)) * M_UNIT;
 
 	// 이동할 수 있는 좌표인지 검증 후 최신화한다.
 	if (!moveable(game, nx, ny))
 		return ;
-	game->px = nx;
-	game->py = ny;
+	game->pX = nx;
+	game->pY = ny;
 }
 
 void	rotate(t_game *game, double angle)
 {
 	// 플레이어의 방향벡터를 최신화한다.
-	game->dirx += game->dirx * cos(angle) - game->diry * sin(angle);
-	game->diry += game->dirx * sin(angle) - game->diry * cos(angle);
+	game->dirX += game->dirX * cos(angle) - game->dirY * sin(angle);
+	game->dirY += game->dirX * sin(angle) - game->dirY * cos(angle);
 
 	// 카메라 평면을 어떻게.....?
 }
 
 int		deal_key(int key_code, t_game *game)
 {
-	if (key_code == KEY_ESC)
-		closed(3);
+	// if (key_code == KEY_ESC)
+	// 	closed(3);
 	if (key_code == KEY_UP || key_code == KEY_W)
 		move(game, 0);
 	else if (key_code == KEY_DOWN || key_code == KEY_S)
@@ -67,5 +67,6 @@ int		deal_key(int key_code, t_game *game)
 	// 	1 * 32, 4 * 32, 32, 32,
 	// 	game->px * 64, game->py * 64, 64, 64, 0xFFFFFF);
 	// print_status(game);
+	printf("Key Event\n");
 	return (0);
 }
