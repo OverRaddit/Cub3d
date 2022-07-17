@@ -6,12 +6,12 @@
 #    By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 21:25:08 by jinyoo            #+#    #+#              #
-#    Updated: 2022/07/17 14:44:27 by gshim            ###   ########.fr        #
+#    Updated: 2022/07/17 23:49:09 by gshim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude
+CFLAGS = -Wall -Wextra -Werror -Iinclude -g3 -fsanitize=address
 
 NAME = cub3d
 
