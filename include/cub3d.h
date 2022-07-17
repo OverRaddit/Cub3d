@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/17 01:33:39 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/17 19:33:59 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,21 @@ typedef struct	s_map
 }	t_map;
 
 //error.c
-void	exit_error(char *message);
+void	exit_error(t_map *map, char *message);
+void	free_all_data(t_map *map);
 
 //=================================parsing=====================================
 
 //parse.c
 void	parse(t_map *map, char *cub_file_path);
+char	*access_information(char *line);
 
 //validation.c
 int	check_valid_data(char *line);
-int	get_cub_file_fd(char *cub_file_path);
+int	get_cub_file_fd(t_map *map,char *cub_file_path);
 
 //parse_color.c
-char	*access_information(char *line);
-int	parse_color(char *line);
+int	parse_color(t_map *map, char *line, int identifier);
 
 //parse_map.c
 void	parse_map(t_map *map);
