@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS =-Wall -Wextra -Werror
+CFLAGS =-Wall -Wextra -Werror -g3 -fsanitize=address
 AR=ar
 ARFLAGS=crs
 NAME = libft.a
@@ -47,7 +47,7 @@ SRCS_BONUS=\
 	ft_lstlast.c \
 	ft_lstmap.c \
 	ft_lstnew.c \
-	ft_lstsize.c 
+	ft_lstsize.c
 OBJECTS = $(SRCS:.c=.o)
 OBJECTS_BONUS = $(SRCS_BONUS:.c=.o)
 ifdef WITH_BONUS
@@ -76,6 +76,6 @@ clean:
 fclean:
 	@rm -rf $(NAME) $(OBJECTS) $(OBJECTS_BONUS)
 
-re: 
+re:
 	@make fclean
 	@make all

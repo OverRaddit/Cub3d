@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_setting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:13:44 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/17 19:21:24 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/17 21:01:14 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@ static void	save_player_position(t_map *map, int x, int y)
 {
 	if (map->player.starting_sight || map->player.px || map->player.py)
 		exit_error(map, "Invalid Map");
+
+	// get_dir  구구현..
 	map->player.starting_sight = map->map_malloc[y][x];
-	map->player.px = x;
-	map->player.py = y;
+	// get_dir(&(map->player), map->player.starting_sight);	// set dirx diry
+	map->player.px = (double)x;
+	map->player.py = (double)y;
+	map->map_malloc[y][x] = '0';
 }
 
 static int	setting_handler(t_map *map, int x, int y)

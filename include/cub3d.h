@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/17 19:33:59 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/17 22:10:07 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct	s_texture
 
 typedef struct	s_player
 {
-	int		px;
-	int		py;
+	double	px;
+	double	py;
 	double	dirx;
 	double	diry;
 	char	starting_sight;
@@ -80,7 +80,7 @@ typedef struct	s_map
 	int			row;
 	int			col;
 }	t_map;
-
+// 14 *
 //error.c
 void	exit_error(t_map *map, char *message);
 void	free_all_data(t_map *map);
@@ -127,7 +127,7 @@ typedef struct s_game
 	// t_img	img;
 	// t_img	tile;
 	// t_img	item;
-	char		map[10][10];
+	//char		map[10][10];
 
 	// player's Pos, Dir, cameraDir(right)
 	double	pX;
@@ -136,7 +136,10 @@ typedef struct s_game
 	double	dirY;
 	double	planeX;
 	double	planeY;
-}				t_game;
+
+	//t_raycasting r;
+	t_map	*map;
+}	t_game;
 
 typedef struct s_raycasting
 {
@@ -157,7 +160,7 @@ typedef struct s_raycasting
 	int		lineHeight;
 	int		drawStart;
 	int		drawEnd;
-}		t_raycasting;
+}	t_raycasting;
 
 # define SCREEN_WIDTH	640
 # define SCREEN_HEIGHT	480

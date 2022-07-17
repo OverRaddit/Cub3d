@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/17 20:15:04 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/17 22:09:51 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int main_loop(t_game *g)
 		int stepX,stepY;
 		int hit=0,side;
 
+		printf("After Declaration\n");
+
 		// calculate
 		if (rayDirX < 0)
 		{
@@ -116,7 +118,10 @@ int main_loop(t_game *g)
 			sideDistY = (mapY + 1.0 - g->pY) * deltaDistY;
 		}
 
+		printf("After Calc\n");
+
 		// perform DDA
+		printf("TEM |%d|\n", g->map->map_malloc[0][0]);
 		while (hit == 0)
 		{
 			if (sideDistX < sideDistY)
@@ -131,14 +136,28 @@ int main_loop(t_game *g)
 				mapY += stepY;
 				side = 1;
 			}
-			if (worldMap[mapX][mapY] > 0) hit = 1;
+			// 맵의 빈공간으로 이동시.
+			printf("map X %d)\n", mapX);
+			printf("map Y %d)\n",mapY);
+			printf("map(X,Y) %d)\n", g->map->map_malloc[mapX][mapY]);
+			if (!(g->map->map_malloc[mapY][mapX] >= '0'
+				&& g->map->map_malloc[mapY][mapX] <= '9'))
+			{
+				printf("Empty Space...");
+				continue;
+			}
+			if (g->map->map_malloc[mapY][mapX] - '0' > 0) hit = 1;
 		}
+
+		printf("After DDA\n");
 
 		// 카메라평면~부딫친벽과의 거리
 		if (side == 0)
 			perpWallDist = (mapX - g->pX + (1 - stepX) / 2) / rayDirX;
 		else
 			perpWallDist = (mapY - g->pY + (1 - stepY) / 2) / rayDirY;
+
+		printf("After Calc2\n");
 
 		// 그릴 지점 찾기.
 		int lineHeight = (int)(SCREEN_HEIGHT / perpWallDist);
@@ -148,51 +167,54 @@ int main_loop(t_game *g)
 		int drawEnd = lineHeight / 2 + SCREEN_HEIGHT / 2;
 		if (drawEnd >= SCREEN_HEIGHT) drawEnd = SCREEN_HEIGHT - 1;
 
+		printf("After Draw init\n");
 //======================
 // Untextured Version
 //======================
-		// int color;
-		// switch(worldMap[mapX][mapY])
-		// {
-		// 	case 1:  color = RGB_Red;    break; //red
-		// 	case 2:  color = RGB_Green;  break; //green
-		// 	case 3:  color = RGB_Blue;   break; //blue
-		// 	case 4:  color = RGB_White;  break; //white
-		// 	default: color = RGB_Yellow; break; //yellow
-		// }
+		int color;
+		switch(g->map->map_malloc[mapY][mapX] - '0')
+		{
+			case 1:  color = RGB_Red;    break; //red
+			case 2:  color = RGB_Green;  break; //green
+			case 3:  color = RGB_Blue;   break; //blue
+			case 4:  color = RGB_White;  break; //white
+			default: color = RGB_Yellow; break; //yellow
+		}
 
-		// //give x and y sides different brightness
-		// if(side == 1) {color = color / 2;}
+		//give x and y sides different brightness
+		if(side == 1) {color = color / 2;}
 
-		// //draw the pixels of the stripe as a vertical line
-		// for(int i=drawStart;i<=drawEnd;i++)
-		// 	mlx_pixel_put(g->mlx, g->win, x, i, color);
+		//draw the pixels of the stripe as a vertical line
+		for(int i=drawStart;i<=drawEnd;i++)
+			mlx_pixel_put(g->mlx, g->win, x, i, color);
+
+		printf("After Draw\n");
 
 //======================
 // Textured Version
 //======================
-		double wallX;
-		if (side == 0) wallX = g->pY + perpWallDist * rayDirY;
-		else           wallX = g->pX + perpWallDist * rayDirX;
-		wallX -= floor((wallX));
+		// double wallX;
+		// if (side == 0) wallX = g->pY + perpWallDist * rayDirY;
+		// else           wallX = g->pX + perpWallDist * rayDirX;
+		// wallX -= floor((wallX));
 
-		int texX = (int)(wallX * (double)texWidth);
-		if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
-		if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1;
+		// int texX = (int)(wallX * (double)texWidth);
+		// if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
+		// if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1;
 	}
 
-	double step = 1.0 * texHeight / lineHeight;
-	// Starting texture coordinate
-	double texPos = (drawStart - h / 2 + lineHeight / 2) * step;
-	for(int y = drawStart; y<drawEnd; y++)
-	{
-	// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-	int texY = (int)texPos & (texHeight - 1);
-	texPos += step;
-	Uint32 color = texture[texNum][texHeight * texY + texX];
-	//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-	if(side == 1) color = (color >> 1) & 8355711;
-	buffer[y][x] = color;
+	// double step = 1.0 * texHeight / lineHeight;
+	// // Starting texture coordinate
+	// double texPos = (drawStart - h / 2 + lineHeight / 2) * step;
+	// for(int y = drawStart; y<drawEnd; y++)
+	// {
+	// // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+	// int texY = (int)texPos & (texHeight - 1);
+	// texPos += step;
+	// Uint32 color = texture[texNum][texHeight * texY + texX];
+	// //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+	// if(side == 1) color = (color >> 1) & 8355711;
+	// buffer[y][x] = color;
 
 	return (0);
 }
@@ -203,8 +225,10 @@ int	main(int argc, char *argv[])
 	t_map	map;
 	t_game	game;
 
-	if (argc != 2)
+	if (argc != 2){
 		ft_putendl_fd("Error", 2);
+		return 0;
+	}
 	else
 	{
 		ft_memset(&map, 0, sizeof(t_map));
@@ -212,12 +236,18 @@ int	main(int argc, char *argv[])
 		map_setting(&map);
 	}
 		// 수동입력
-		game.pX = 6;
-		game.pY = 5;
+		game.pX = map.player.px;
+		game.pY = map.player.py;
 		game.dirX = -1;
 		game.dirY = 0;
 		game.planeX = 0;
 		game.planeY = 0.66;
+		game.map = &map;
+
+	for(int i=0;i<map.row;i++)
+	{
+		printf("%s\n", map.map_malloc[i]);
+	}
 
 		window_init(&game);
 		mlx_hook(game.win, X_EVENT_KEY_PRESS, 0, &deal_key, &game);
@@ -225,6 +255,8 @@ int	main(int argc, char *argv[])
 		mlx_loop_hook(game.mlx, &main_loop, &game);	// 아무 이벤트도 없는경우.
 		mlx_loop(game.mlx);							//
 
-	free_all_data(&map);
+
+
+	//free_all_data(&map);
 	return 0;
 }
