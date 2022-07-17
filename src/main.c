@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/17 01:41:54 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/17 20:02:09 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int worldMap[24][24]=
 
 int main_loop(t_game *g)
 {
-	t_raycasting ray;
+	//t_raycasting ray;
 	// 이전 화면을 지운다.
 	mlx_clear_window(g->mlx, g->win);
 	printf("pos(%f, %f), dir(%f, %f => %f degree), plane(%f, %f)\n", g->pX, g->pY, g->dirX, g->dirY, g->dirY/g->dirX, g->planeX, g->planeY);
@@ -148,25 +148,51 @@ int main_loop(t_game *g)
 		int drawEnd = lineHeight / 2 + SCREEN_HEIGHT / 2;
 		if (drawEnd >= SCREEN_HEIGHT) drawEnd = SCREEN_HEIGHT - 1;
 
-		// color = (r * 256 * 256) + (g * 256) + b;
-		int color ;
-		 switch(worldMap[mapX][mapY])
-		{
-			case 1:  color = RGB_Red;    break; //red
-			case 2:  color = RGB_Green;  break; //green
-			case 3:  color = RGB_Blue;   break; //blue
-			case 4:  color = RGB_White;  break; //white
-			default: color = RGB_Yellow; break; //yellow
-		}
+//======================
+// Untextured Version
+//======================
+		// int color;
+		// switch(worldMap[mapX][mapY])
+		// {
+		// 	case 1:  color = RGB_Red;    break; //red
+		// 	case 2:  color = RGB_Green;  break; //green
+		// 	case 3:  color = RGB_Blue;   break; //blue
+		// 	case 4:  color = RGB_White;  break; //white
+		// 	default: color = RGB_Yellow; break; //yellow
+		// }
 
-		//give x and y sides different brightness
-		if(side == 1) {color = color / 2;}
+		// //give x and y sides different brightness
+		// if(side == 1) {color = color / 2;}
 
-		//draw the pixels of the stripe as a vertical line
-		for(int i=drawStart;i<=drawEnd;i++)
-			mlx_pixel_put(g->mlx, g->win, x, i, color);
-		//verLine(x, drawStart, drawEnd, color);
+		// //draw the pixels of the stripe as a vertical line
+		// for(int i=drawStart;i<=drawEnd;i++)
+		// 	mlx_pixel_put(g->mlx, g->win, x, i, color);
+
+//======================
+// Textured Version
+//======================
+		double wallX;
+		if (side == 0) wallX = g->pY + perpWallDist * rayDirY;
+		else           wallX = g->pX + perpWallDist * rayDirX;
+		wallX -= floor((wallX));
+
+		int texX = (int)(wallX * (double)texWidth);
+		if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
+		if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1;
 	}
+
+	double step = 1.0 * texHeight / lineHeight;
+	// Starting texture coordinate
+	double texPos = (drawStart - h / 2 + lineHeight / 2) * step;
+	for(int y = drawStart; y<drawEnd; y++)
+	{
+	// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+	int texY = (int)texPos & (texHeight - 1);
+	texPos += step;
+	Uint32 color = texture[texNum][texHeight * texY + texX];
+	//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+	if(side == 1) color = (color >> 1) & 8355711;
+	buffer[y][x] = color;
 
 	return (0);
 }
