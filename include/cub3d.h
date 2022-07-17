@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/16 20:40:28 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/17 01:33:39 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,9 @@ typedef struct s_raycasting
 	int		stepY;
 	int		hit;
 	int		side;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
 }		t_raycasting;
 
 # define SCREEN_WIDTH	640
