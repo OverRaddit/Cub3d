@@ -6,7 +6,7 @@
 /*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:33:59 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/15 17:09:12 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/17 19:22:33 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	parse_map(t_map *map)
 
 	map->map_malloc = ft_split(map->tmp_map_malloc, '\n');
 	if (map->map_malloc == NULL)
-		exit_error(NULL);
+		exit_error(map, NULL);
 	row = -1;
 	col = 0;
 	while (map->map_malloc[++row] != NULL)
@@ -56,12 +56,12 @@ int	check_data_order(t_map *map)
 		while (++i < 4)
 		{
 			if (map->tex[i].tex_path_malloc == NULL)
-				exit_error("Invalid Data Order");
+				exit_error(map, "Invalid Data Order");
 		}
 		if (map->ceiling_color == NO_COLOR || map->floor_color == NO_COLOR)
-			exit_error("Invalid Data Order");
+			exit_error(map, "Invalid Data Order");
 		if (map->ceiling_color == map->floor_color)
-			exit_error("Cannot Be Same Color");
+			exit_error(map, "Cannot Be Same Color");
 	}
 	return (SUCCESS);
 }
