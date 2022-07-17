@@ -6,7 +6,7 @@
 /*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:57:49 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/15 17:09:49 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/17 19:23:07 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,22 @@ static int	is_map_valid(char *line)
 
 int	check_valid_data(char *line)
 {
-	if (line[0] == 'N' && line[1] == 'O')
-		return (NO);
-	else if (line[0] == 'S' && line[1] == 'O')
-		return (SO);
-	else if (line[0] == 'W' && line[1] == 'E')
-		return (WE);
-	else if (line[0] == 'E' && line[1] == 'A')
-		return (EA);
-	else if (line[0] == 'F' && line[1] == ' ')
-		return (FLOOR);
-	else if (line[0] == 'C' && line[1] == ' ')
-		return (CEIL);
-	else if (is_map_valid(line))
+	if ((int)ft_strlen(line) > 3)
+	{
+		if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
+			return (NO);
+		else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
+			return (SO);
+		else if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ' )
+			return (WE);
+		else if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
+			return (EA);
+		else if (line[0] == 'F' && line[1] == ' ')
+			return (FLOOR);
+		else if (line[0] == 'C' && line[1] == ' ')
+			return (CEIL);
+	}
+	if (is_map_valid(line))
 		return (MAP);
 	return (ERROR);
 }
@@ -72,14 +75,14 @@ static int	is_cub_file(char *cub_file_path)
 	return (is_same);
 }
 
-int	get_cub_file_fd(char *cub_file_path)
+int	get_cub_file_fd(t_map *map, char *cub_file_path)
 {
 	int	fd;
 
 	if (!is_cub_file(cub_file_path))
-		exit_error("Invalid File Extension");
+		exit_error(map, "Invalid File Extension");
 	fd = open(cub_file_path, O_RDONLY);
 	if (fd == -1)
-		exit_error("Cannot Open File");
+		exit_error(map, "Cannot Open File");
 	return (fd);
 }
