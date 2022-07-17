@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/17 01:41:54 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/17 19:43:11 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,37 +184,21 @@ int	main(int argc, char *argv[])
 		ft_memset(&map, 0, sizeof(t_map));
 		parse(&map, argv[1]);
 		map_setting(&map);
-		// for (int i = 0;i < 4;i++)
-		// 	printf("tex_path : %s\n", map.tex[i].tex_path_malloc);
-		// printf("\n");
-		// printf("ceilling color: %#x\n", map.ceiling_color);
-		// printf("floor color: %#x\n", map.floor_color);
-		// printf("col : %d, row : %d\n", map.col, map.row);
-		// printf("Starting Sight : %c\n", map.player.starting_sight);
-		// printf("px : %d, py : %d\n", map.player.px, map.player.py);
-		// int y = -1;
-		// while (map.map_malloc[++y])
-		// {
-		// 	int x = -1;
-		// 	while (map.map_malloc[y][++x])
-		// 		printf("%c", map.map_malloc[y][x]);
-		// 	printf("\n");
-		// }
 	}
+		// 수동입력
+		game.pX = 6;
+		game.pY = 5;
+		game.dirX = -1;
+		game.dirY = 0;
+		game.planeX = 0;
+		game.planeY = 0.66;
 
-	// 수동입력
-	game.pX = 6;
-	game.pY = 5;
-	game.dirX = -1;
-	game.dirY = 0;
-	game.planeX = 0;
-	game.planeY = 0.66;
+		window_init(&game);
+		mlx_hook(game.win, X_EVENT_KEY_PRESS, 0, &deal_key, &game);
+		// mlx_hook(game.win, X_EVENT_KEY_EXIT, 0, &closed, &game);
+		mlx_loop_hook(game.mlx, &main_loop, &game);	// 아무 이벤트도 없는경우.
+		mlx_loop(game.mlx);							//
 
-	window_init(&game);
-	mlx_hook(game.win, X_EVENT_KEY_PRESS, 0, &deal_key, &game);
-	//mlx_hook(game.win, X_EVENT_KEY_EXIT, 0, &closed, &game);
-	mlx_loop_hook(game.mlx, &main_loop, &game);	// 아무 이벤트도 없는경우.
-	mlx_loop(game.mlx);							//
-
+	free_all_data(&map);
 	return 0;
 }

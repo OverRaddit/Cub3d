@@ -6,16 +6,45 @@
 /*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:17:52 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/12 16:34:59 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/17 19:38:34 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	exit_error(char *message)
+void	free_all_data(t_map *map)
+{
+	int	i;
+
+	if (map->tmp_map_malloc)
+		free(map->tmp_map_malloc);
+	map->tmp_map_malloc = NULL;
+	if (map->map_malloc)
+	{
+		i = -1;
+		while (map->map_malloc[++i])
+		{
+			free(map->map_malloc[i]);
+			map->map_malloc[i] = NULL;
+		}
+		free(map->map_malloc);
+	}
+	i = -1;
+	while (++i < 4)
+	{
+		if (map->tex[i].tex_path_malloc)
+		{
+			free(map->tex[i].tex_path_malloc);
+			map->tex[i].tex_path_malloc = NULL;
+		}
+	}
+}
+
+void	exit_error(t_map *map, char *message)
 {
 	ft_putendl_fd("ERROR", 2);
 	if (message)
 		ft_putendl_fd(message, 2);
+	free_all_data(map);
 	exit(1);
 }
