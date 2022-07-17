@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setting.c                                          :+:      :+:    :+:   */
+/*   map_setting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:13:44 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/15 17:35:29 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/17 19:21:24 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	save_player_position(t_map *map, int x, int y)
 {
 	if (map->player.starting_sight || map->player.px || map->player.py)
-		exit_error("Invalid Map");
+		exit_error(map, "Invalid Map");
 	map->player.starting_sight = map->map_malloc[y][x];
 	map->player.px = x;
 	map->player.py = y;
@@ -55,10 +55,10 @@ void	map_setting(t_map *map)
 			else if (ft_strchr("0NSEW", map->map_malloc[y][x]) != NULL)
 			{
 				if (setting_handler(map, x, y) == ERROR)
-					exit_error("Invalid Map");
+					exit_error(map, "Invalid Map");
 			}
 		}
 	}
 	if (!map->player.starting_sight)
-		exit_error("Invalid Map");
+		exit_error(map, "Invalid Map");
 }
