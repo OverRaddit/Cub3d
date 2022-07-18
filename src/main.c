@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/18 00:22:01 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/18 22:02:17 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,14 @@ int main_loop(t_game *g)
 		}
 
 		// 카메라평면~부딫친벽과의 거리
+		// if (side == 0)
+		// 	perpWallDist = (mapX - g->pX + (1 - stepX) / 2) / rayDirX;
+		// else
+		// 	perpWallDist = (mapY - g->pY + (1 - stepY) / 2) / rayDirY;
 		if (side == 0)
-			perpWallDist = (mapX - g->pX + (1 - stepX) / 2) / rayDirX;
+			perpWallDist = sqrt(sideDistX * sideDistX - (rayDirX*rayDirX + rayDirY*rayDirY));
 		else
-			perpWallDist = (mapY - g->pY + (1 - stepY) / 2) / rayDirY;
+			perpWallDist = sqrt(sideDistY * sideDistY - (rayDirX*rayDirX + rayDirY*rayDirY));
 
 		// 그릴 지점 찾기.
 		int lineHeight = (int)(SCREEN_HEIGHT / perpWallDist);
