@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/18 00:15:45 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/19 02:27:28 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int moveable(t_game *game, double nx, double ny)
 	// }
 	if (game->map->map_malloc[(int)nx][(int)ny] > '0')
 	{
-		printf("(%d, %d) is wall\n", (int)nx, (int)ny);
+		//printf("(%d, %d) is wall\n", (int)nx, (int)ny);
 		return 0;
 	}
 	else
@@ -88,6 +88,6 @@ int		deal_key(int key_code, t_game *game)
 	// 	1 * 32, 4 * 32, 32, 32,
 	// 	game->px * 64, game->py * 64, 64, 64, 0xFFFFFF);
 	// print_status(game);
-	printf("Key Event\n");
+	//printf("Key Event\n");
 	return (0);
 }
