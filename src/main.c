@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/17 22:09:51 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/18 00:22:01 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,9 @@
 // 	return 0;
 // }
 
-int worldMap[24][24]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
-
 int main_loop(t_game *g)
 {
+	char **Map = g->map->map_malloc;
 	//t_raycasting ray;
 	// 이전 화면을 지운다.
 	mlx_clear_window(g->mlx, g->win);
@@ -94,8 +67,6 @@ int main_loop(t_game *g)
 		int stepX,stepY;
 		int hit=0,side;
 
-		printf("After Declaration\n");
-
 		// calculate
 		if (rayDirX < 0)
 		{
@@ -118,10 +89,7 @@ int main_loop(t_game *g)
 			sideDistY = (mapY + 1.0 - g->pY) * deltaDistY;
 		}
 
-		printf("After Calc\n");
-
 		// perform DDA
-		printf("TEM |%d|\n", g->map->map_malloc[0][0]);
 		while (hit == 0)
 		{
 			if (sideDistX < sideDistY)
@@ -136,28 +104,14 @@ int main_loop(t_game *g)
 				mapY += stepY;
 				side = 1;
 			}
-			// 맵의 빈공간으로 이동시.
-			printf("map X %d)\n", mapX);
-			printf("map Y %d)\n",mapY);
-			printf("map(X,Y) %d)\n", g->map->map_malloc[mapX][mapY]);
-			if (!(g->map->map_malloc[mapY][mapX] >= '0'
-				&& g->map->map_malloc[mapY][mapX] <= '9'))
-			{
-				printf("Empty Space...");
-				continue;
-			}
-			if (g->map->map_malloc[mapY][mapX] - '0' > 0) hit = 1;
+			if (Map[mapX][mapY] > '0') hit = 1;
 		}
-
-		printf("After DDA\n");
 
 		// 카메라평면~부딫친벽과의 거리
 		if (side == 0)
 			perpWallDist = (mapX - g->pX + (1 - stepX) / 2) / rayDirX;
 		else
 			perpWallDist = (mapY - g->pY + (1 - stepY) / 2) / rayDirY;
-
-		printf("After Calc2\n");
 
 		// 그릴 지점 찾기.
 		int lineHeight = (int)(SCREEN_HEIGHT / perpWallDist);
@@ -166,13 +120,11 @@ int main_loop(t_game *g)
 		if (drawStart < 0) drawStart = 0;
 		int drawEnd = lineHeight / 2 + SCREEN_HEIGHT / 2;
 		if (drawEnd >= SCREEN_HEIGHT) drawEnd = SCREEN_HEIGHT - 1;
-
-		printf("After Draw init\n");
 //======================
 // Untextured Version
 //======================
 		int color;
-		switch(g->map->map_malloc[mapY][mapX] - '0')
+		switch(Map[mapX][mapY] - '0')
 		{
 			case 1:  color = RGB_Red;    break; //red
 			case 2:  color = RGB_Green;  break; //green
@@ -180,15 +132,12 @@ int main_loop(t_game *g)
 			case 4:  color = RGB_White;  break; //white
 			default: color = RGB_Yellow; break; //yellow
 		}
-
 		//give x and y sides different brightness
 		if(side == 1) {color = color / 2;}
 
 		//draw the pixels of the stripe as a vertical line
 		for(int i=drawStart;i<=drawEnd;i++)
 			mlx_pixel_put(g->mlx, g->win, x, i, color);
-
-		printf("After Draw\n");
 
 //======================
 // Textured Version

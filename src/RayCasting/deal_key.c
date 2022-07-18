@@ -3,30 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   deal_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/16 20:38:34 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/18 00:15:45 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-extern int worldMap[24][24];
 
 //=========================
 // 현재 사용하는 map은 임시 더미맵이다. 파싱한 맵이 아니다.
 //=========================
 static int moveable(t_game *game, double nx, double ny)
 {
-	(void)game;
 	// 맵 검증이 완벽하다면 인덱스 체크는 필요없다.
-	if (ny < 0 || nx < 0 || ny > 24 || nx > 24)
-	{
-		printf("Out of Index\n");
-		return 0;
-	}
-	if (worldMap[(int)nx][(int)ny] > 0)
+	// if (ny < 0 || nx < 0 || ny > game->map->col || nx > game->map->row)
+	// {
+	// 	printf("Out of Index\n");
+	// 	return 0;
+	// }
+	if (game->map->map_malloc[(int)nx][(int)ny] > '0')
 	{
 		printf("(%d, %d) is wall\n", (int)nx, (int)ny);
 		return 0;

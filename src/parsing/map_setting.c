@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   map_setting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:13:44 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/17 21:01:14 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/18 12:30:18 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
+static void	get_dir(t_map *map, char c)
+{
+	if (c == 'N')
+	{
+
+	}
+	if (c == 'S')
+	{
+
+	}
+	if (c == 'E')
+	{
+
+	}
+	if (c == 'W')
+	{
+		game.dirX = -1;
+		game.dirY = 0;
+		game.planeX = 0;
+		game.planeY = 0.66;
+	}
+}
 
 static void	save_player_position(t_map *map, int x, int y)
 {
@@ -20,8 +43,8 @@ static void	save_player_position(t_map *map, int x, int y)
 	// get_dir  구구현..
 	map->player.starting_sight = map->map_malloc[y][x];
 	// get_dir(&(map->player), map->player.starting_sight);	// set dirx diry
-	map->player.px = (double)x;
-	map->player.py = (double)y;
+	map->player.px = (double)y;
+	map->player.py = (double)x;
 	map->map_malloc[y][x] = '0';
 }
 
