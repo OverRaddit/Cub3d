@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   map_setting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:13:44 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/18 12:30:18 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/18 17:19:18 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static void	get_dir(t_map *map, char c)
-{
-	if (c == 'N')
-	{
+// static void	get_dir(t_map *map, char c)
+// {
+// 	if (c == 'N')
+// 	{
 
-	}
-	if (c == 'S')
-	{
+// 	}
+// 	if (c == 'S')
+// 	{
 
-	}
-	if (c == 'E')
-	{
+// 	}
+// 	if (c == 'E')
+// 	{
 
-	}
-	if (c == 'W')
-	{
-		game.dirX = -1;
-		game.dirY = 0;
-		game.planeX = 0;
-		game.planeY = 0.66;
-	}
-}
+// 	}
+// 	if (c == 'W')
+// 	{
+// 		game.dirX = -1;
+// 		game.dirY = 0;
+// 		game.planeX = 0;
+// 		game.planeY = 0.66;
+// 	}
+// }
 
 static void	save_player_position(t_map *map, int x, int y)
 {

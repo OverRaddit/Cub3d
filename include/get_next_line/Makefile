@@ -6,12 +6,12 @@
 #    By: gshim <gshim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 18:49:45 by jinyoo            #+#    #+#              #
-#    Updated: 2022/07/17 21:34:01 by gshim            ###   ########.fr        #
+#    Updated: 2022/07/18 17:20:27 by gshim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 NAME = libgnl.a
 
 SRCS = get_next_line.c get_next_line_utils.c

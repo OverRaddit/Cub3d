@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:17:52 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/17 19:38:34 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/19 16:23:27 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ void	free_all_data(t_map *map)
 			map->tex[i].tex_path_malloc = NULL;
 		}
 	}
+}
+
+int		exit_event(t_map *map)
+{
+	ft_putendl_fd("EXIT CUB3D", 0);
+	free_all_data(map);
+	exit(1);
 }
 
 void	exit_error(t_map *map, char *message)

@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: gshim <gshim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 21:25:08 by jinyoo            #+#    #+#              #
-#    Updated: 2022/07/17 23:49:09 by gshim            ###   ########.fr        #
+#    Updated: 2022/07/19 21:41:28 by gshim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 
 NAME = cub3d
 
@@ -25,7 +25,9 @@ SRCS =	src/main.c \
 		src/parsing/validation.c \
 		src/utils/util.c \
 		src/raycasting/cub3d_init.c \
-		src/raycasting/deal_key.c
+		src/raycasting/deal_key.c \
+		src/raycasting/ray_cal.c \
+		src/raycasting/ray_render.c
 
 OBJS = $(SRCS:.c=.o)
 
