@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/19 04:08:34 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/20 00:53:24 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,18 @@
 
 #define NO_COLOR -1
 
-typedef struct	s_texture
+#define _USE_MATH_DEFINES
+# include <math.h>
+
+typedef struct s_img
 {
-	char		*tex_path_malloc;
-	int			*texture;
-	double		width;
-	double		height;
-}	t_texture;
+	void	*img;
+	int		*data;
+
+	int		size_l;
+	int		bpp;
+	int		endian;
+}				t_img;
 
 typedef struct	s_player
 {
@@ -68,6 +73,15 @@ typedef struct	s_player
 	double	diry;
 	char	starting_sight;
 }	t_player;
+
+typedef struct	s_texture
+{
+	char		*tex_path_malloc;
+	//int			*texture;
+	t_img		texture;
+	int			width;
+	int			height;
+}	t_texture;
 
 typedef struct	s_map
 {
@@ -80,8 +94,48 @@ typedef struct	s_map
 	int			row;
 	int			col;
 }	t_map;
+
+typedef struct s_game
+{
+	void	*mlx;
+	void	*win;
+	t_img	wall;
+	t_img	screen;
+	t_map	*map;
+	// t_img	tile;
+	// t_img	item;
+	//char		map[10][10];
+
+	// player's Pos, Dir, cameraDir(right)
+	double	pX;
+	double	pY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
+
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	int		mapX;
+	int		mapY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		stepX;
+	int		stepY;
+	int		hit;
+	int		side;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+}	t_game;
+
 // 14 *
 //error.c
+int		exit_event(t_map *map);
 void	exit_error(t_map *map, char *message);
 void	free_all_data(t_map *map);
 
@@ -117,66 +171,16 @@ int	is_space(char c);
 // Gshim
 //=============================================================================
 
-#define _USE_MATH_DEFINES
+# define _USE_MATH_DEFINES
 # include <math.h>
 # include <string.h> // memset
 
-typedef struct s_img
-{
-	void	*img;
-	int		*data;
-
-	int		size_l;
-	int		bpp;
-	int		endian;
-}				t_img;
-
-typedef struct s_game
-{
-	void	*mlx;
-	void	*win;
-	t_img	wall;
-	t_img	item;
-	t_img	screen;
-	//char		map[10][10];
-
-	// player's Pos, Dir, cameraDir(right)
-	double	pX;
-	double	pY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
-
-	//t_raycasting r;
-	t_map	*map;
-}	t_game;
-
-typedef struct s_raycasting
-{
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-	int		mapX;
-	int		mapY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	int		stepX;
-	int		stepY;
-	int		hit;
-	int		side;
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
-}	t_raycasting;
 
 # define SCREEN_WIDTH	640
 # define SCREEN_HEIGHT	480
 # define M_UNIT			0.1		// 이동단위
-# define R_UNIT			M_PI_4	// 회전단위
+# define R_UNIT			M_PI_4/4	// 회전단위
+# define BODY_UNIT		0.1		// 벽과 플레이어와의 최소거리
 //# define R_UNIT			M_PI / 180	// 회전단위
 
 // color
@@ -195,5 +199,13 @@ void	move(t_game *game, double angle);
 void	rotate(t_game *game, double angle);
 int		deal_key(int key_code, t_game *game);
 
+// ray_cal.c
+void	ray_cal_init(t_game *g, int x);
+void	getSideDist(t_game *g);
+void	DDA(t_game *g);
+void	getDrawPoint(t_game *g);
 
+// ray_render.c
+void		setScreen(t_game *g, unsigned int *screen);
+t_texture	getWallTexture(t_game *g);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:09:42 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/19 03:40:07 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/19 20:56:57 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,28 @@ void player_init(t_game *g)
 	g->dirY = sin(angle);
 	g->planeX = 0.66 * cos(angle - M_PI_2);
 	g->planeY = 0.66 * sin(angle - M_PI_2);
-	//printf("~dir(%f, %f) plane(%f, %f)\n", g->dirX, g->dirY, g->planeX, g->planeY);
 }
 
 void	img_init(t_game *game)
 {
-	int	img_width;
-	int	img_height;
-
 	// 벽파일 열기
-	game->wall.img = mlx_xpm_file_to_image(game->mlx,
-			"./texture/diamond_ore.xpm", &img_width, &img_height);
-	//printf("%d %d\n", img_width, img_height);
-	game->item.img = mlx_xpm_file_to_image(game->mlx,
-			"./texture/gold_ore.xpm", &img_width, &img_height);
-	//printf("%d %d\n", img_width, img_height);
+	printf("%s\n", game->map->tex[0].tex_path_malloc);
+	printf("%s\n", game->map->tex[1].tex_path_malloc);
+	printf("%s\n", game->map->tex[2].tex_path_malloc);
+	printf("%s\n", game->map->tex[3].tex_path_malloc);
+	game->map->tex[0].texture.img = mlx_xpm_file_to_image(game->mlx,
+			game->map->tex[0].tex_path_malloc, &(game->map->tex[0].width), &(game->map->tex[0].height));
+	game->map->tex[1].texture.img = mlx_xpm_file_to_image(game->mlx,
+			game->map->tex[1].tex_path_malloc, &(game->map->tex[1].width), &(game->map->tex[1].height));
+	game->map->tex[2].texture.img = mlx_xpm_file_to_image(game->mlx,
+			game->map->tex[2].tex_path_malloc, &(game->map->tex[2].width), &(game->map->tex[2].height));
+	game->map->tex[3].texture.img = mlx_xpm_file_to_image(game->mlx,
+			game->map->tex[3].tex_path_malloc, &(game->map->tex[3].width), &(game->map->tex[3].height));
+
+	printf("tex[0] : %p\n", game->map->tex[0].texture.img);
+	printf("tex[1] : %p\n", game->map->tex[1].texture.img);
+	printf("tex[2] : %p\n", game->map->tex[2].texture.img);
+	printf("tex[3] : %p\n", game->map->tex[3].texture.img);
 
 	// 스크린 화면 생성
 	game->screen.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);

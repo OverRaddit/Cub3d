@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   deal_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/19 02:27:28 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/19 19:47:00 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 //=========================
 static int moveable(t_game *game, double nx, double ny)
 {
-	// 맵 검증이 완벽하다면 인덱스 체크는 필요없다.
-	// if (ny < 0 || nx < 0 || ny > game->map->col || nx > game->map->row)
-	// {
-	// 	printf("Out of Index\n");
-	// 	return 0;
-	// }
 	if (game->map->map_malloc[(int)nx][(int)ny] > '0')
 	{
 		//printf("(%d, %d) is wall\n", (int)nx, (int)ny);
@@ -32,22 +26,22 @@ static int moveable(t_game *game, double nx, double ny)
 		return 1;
 }
 
-void	move(t_game *game, double angle)
+void	move(t_game *g, double angle)
 {
 	double nx,ny;
 
 	// 이동할 좌표를 구한다.
-	(void)angle;
-	// nx = game->pX + game->dirX * M_UNIT;
-	// ny = game->pY + game->dirY * M_UNIT;
-	nx = game->pX + (game->dirX * cos(angle) - game->dirY * sin(angle)) * M_UNIT;
-	ny = game->pY + (game->dirX * sin(angle) + game->dirY * cos(angle)) * M_UNIT;
+	nx = g->pX + (g->dirX * cos(angle) - g->dirY * sin(angle)) * M_UNIT;
+	ny = g->pY + (g->dirX * sin(angle) + g->dirY * cos(angle)) * M_UNIT;
 
 	// 이동할 수 있는 좌표인지 검증 후 최신화한다.
-	if (!moveable(game, nx, ny))
+	// 검증하는 좌표는 왼쪽어개, 오른쪽어깨, 플레이어좌표이다.
+	if (!moveable(g, nx, ny)
+		|| !moveable(g, nx + g->planeX * 1/4, ny + g->planeY * 1/4)
+		|| !moveable(g, nx - g->planeX * 1/4, ny - g->planeY * 1/4))
 		return ;
-	game->pX = nx;
-	game->pY = ny;
+	g->pX = nx;
+	g->pY = ny;
 }
 
 void	rotate(t_game *g, double angle)
@@ -72,7 +66,9 @@ int		deal_key(int key_code, t_game *game)
 {
 	// if (key_code == KEY_ESC)
 	// 	closed(3);
-	if (key_code == KEY_UP || key_code == KEY_W)
+	if (key_code == KEY_ESC)
+		exit_event(game->map);
+	else if (key_code == KEY_UP || key_code == KEY_W)
 		move(game, 0);
 	else if (key_code == KEY_DOWN || key_code == KEY_S)
 		move(game, M_PI);
