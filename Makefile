@@ -6,13 +6,13 @@
 #    By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 21:25:08 by jinyoo            #+#    #+#              #
-#    Updated: 2022/07/17 23:49:09 by gshim            ###   ########.fr        #
+#    Updated: 2022/07/19 04:28:05 by gshim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -g3 -fsanitize=address
-
+CFLAGS = -Wall -Wextra -Werror -Iinclude
+# -g3 -fsanitize=address
 NAME = cub3d
 
 SRCS_DIR = src

@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/18 00:08:23 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/19 04:08:34 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,25 @@ int	is_space(char c);
 
 #define _USE_MATH_DEFINES
 # include <math.h>
+# include <string.h> // memset
+
+typedef struct s_img
+{
+	void	*img;
+	int		*data;
+
+	int		size_l;
+	int		bpp;
+	int		endian;
+}				t_img;
 
 typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
-	// t_img	img;
-	// t_img	tile;
-	// t_img	item;
+	t_img	wall;
+	t_img	item;
+	t_img	screen;
 	//char		map[10][10];
 
 	// player's Pos, Dir, cameraDir(right)
@@ -176,7 +187,10 @@ typedef struct s_raycasting
 # define RGB_White 255*65536+255*256+255
 # define RGB_Yellow 255*65536+255*256+0
 
+void	player_init(t_game *g);
+void	img_init(t_game *game);
 void	window_init(t_game *game);
+
 void	move(t_game *game, double angle);
 void	rotate(t_game *game, double angle);
 int		deal_key(int key_code, t_game *game);
