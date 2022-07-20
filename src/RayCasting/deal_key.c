@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/19 19:47:00 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/20 17:50:40 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,14 @@
 //=========================
 static int moveable(t_game *game, double nx, double ny)
 {
-	if (game->map->map_malloc[(int)nx][(int)ny] > '0')
+	int x;
+	int y;
+
+	x = (int)nx;
+	y = (int)ny;
+	if (x < 0 || y < 0 || x >= game->map->row || y >= game->map->col)
+		return 1;
+	if (game->map->map_malloc[x][y] > '0')
 	{
 		//printf("(%d, %d) is wall\n", (int)nx, (int)ny);
 		return 0;
@@ -35,10 +42,12 @@ void	move(t_game *g, double angle)
 	ny = g->pY + (g->dirX * sin(angle) + g->dirY * cos(angle)) * M_UNIT;
 
 	// 이동할 수 있는 좌표인지 검증 후 최신화한다.
-	// 검증하는 좌표는 왼쪽어개, 오른쪽어깨, 플레이어좌표이다.
+	// 검증하는 좌표는 상단 좌좌/우우측측, 하하단  좌좌/우우측측
 	if (!moveable(g, nx, ny)
+		|| !moveable(g, -nx + g->planeX * 1/4, ny + g->planeY * 1/4)
 		|| !moveable(g, nx + g->planeX * 1/4, ny + g->planeY * 1/4)
-		|| !moveable(g, nx - g->planeX * 1/4, ny - g->planeY * 1/4))
+		|| !moveable(g, -nx + g->planeX * 1/4, ny - g->planeY * 1/4)
+		|| !moveable(g, nx + g->planeX * 1/4, ny - g->planeY * 1/4))
 		return ;
 	g->pX = nx;
 	g->pY = ny;

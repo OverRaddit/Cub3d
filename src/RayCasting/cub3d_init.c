@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:09:42 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/19 20:56:57 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/20 19:51:01 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ void player_init(t_game *g)
 	g->dirY = sin(angle);
 	g->planeX = 0.66 * cos(angle - M_PI_2);
 	g->planeY = 0.66 * sin(angle - M_PI_2);
+
+	g->miniW = SCREEN_WIDTH * MINIMAP_SCALE;
+	g->miniH = SCREEN_HEIGHT * MINIMAP_SCALE;
+	g->gridW = g->miniW / g->map->col;
+	g->gridH = g->miniH / g->map->row;
+	printf("map w,h = %d, %d\n", g->map->col, g->map->row);
+	printf("minimap w,h = %d,%d\n", g->miniW, g->miniH);
+	printf("grid w,h = %d,%d\n", g->gridW, g->gridH);
 }
 
 void	img_init(t_game *game)
@@ -59,6 +67,8 @@ void	img_init(t_game *game)
 
 	// 스크린 화면 생성
 	game->screen.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	// 미니맵 화면 생성
+	game->minimap.img = mlx_new_image(game->mlx, game->miniW, game->miniH);
 }
 
 void	window_init(t_game *game)

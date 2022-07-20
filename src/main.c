@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/19 22:05:07 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/20 21:10:46 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ int main_loop(t_game *g)
 
 	unsigned int *screen = (unsigned int *)mlx_get_data_addr(g->screen.img, &(g->screen.bpp), &(g->screen.size_l), &(g->screen.endian));
 	setScreen(g, screen);
+	unsigned int *minimap = (unsigned int *)mlx_get_data_addr(g->minimap.img, &(g->minimap.bpp), &(g->minimap.size_l), &(g->minimap.endian));
+
+
+	// Mouse logic
+	int mouseX,mouseY;
+	mlx_mouse_get_pos(g->win, &mouseX, &mouseY);
+	mlx_mouse_move(g->win, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+	rotate(g, -(mouseX - SCREEN_WIDTH/2) * M_PI/200);
 
 	x = -1;
 	while (++x < SCREEN_WIDTH)
@@ -66,11 +74,16 @@ int main_loop(t_game *g)
 			//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
 			if(g->side == 1) color = (color >> 1) & 8355711;
 
-
+			//g->screen.data[y * SCREEN_WIDTH + x] = color;
 			screen[y * SCREEN_WIDTH + x] = color;
 		}
 	}
 	mlx_put_image_to_window(g->mlx, g->win, g->screen.img, 0, 0);
+
+
+	// 미니맵 그리기
+	paint_minimap(g, minimap);
+
 	return (0);
 }
 
@@ -96,6 +109,9 @@ int	main(int argc, char *argv[])
 
 	window_init(&game);
 	img_init(&game);
+
+	mlx_mouse_hide();
+
 	mlx_hook(game.win, X_EVENT_KEY_PRESS, 0, &deal_key, &game);
 	mlx_hook(game.win, X_EVENT_KEY_EXIT, 0, &exit_event, &map);
 	mlx_loop_hook(game.mlx, &main_loop, &game);

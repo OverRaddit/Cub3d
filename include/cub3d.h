@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/20 00:53:24 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/20 21:09:58 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_game
 	void	*win;
 	t_img	wall;
 	t_img	screen;
+	t_img	minimap;
 	t_map	*map;
 	// t_img	tile;
 	// t_img	item;
@@ -131,6 +132,11 @@ typedef struct s_game
 	int		lineHeight;
 	int		drawStart;
 	int		drawEnd;
+
+	int		miniW;
+	int		miniH;
+	int		gridW;
+	int		gridH;
 }	t_game;
 
 // 14 *
@@ -176,9 +182,11 @@ int	is_space(char c);
 # include <string.h> // memset
 
 
-# define SCREEN_WIDTH	640
-# define SCREEN_HEIGHT	480
-# define M_UNIT			0.1		// 이동단위
+# define SCREEN_WIDTH			1920
+# define SCREEN_HEIGHT			1080
+# define MINIMAP_SCALE			0.25
+
+# define M_UNIT			0.3		// 이동단위
 # define R_UNIT			M_PI_4/4	// 회전단위
 # define BODY_UNIT		0.1		// 벽과 플레이어와의 최소거리
 //# define R_UNIT			M_PI / 180	// 회전단위
@@ -208,4 +216,9 @@ void	getDrawPoint(t_game *g);
 // ray_render.c
 void		setScreen(t_game *g, unsigned int *screen);
 t_texture	getWallTexture(t_game *g);
+
+// minimap.c
+void	paint_minimap(t_game *g, unsigned int *minimap)
+void	paint_grid(t_game *g, unsigned int* minimap, int x, int y, int color);
+
 #endif
