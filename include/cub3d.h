@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/20 01:15:10 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 13:31:22 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@
 
 # define LAST 0
 # define NO_COLOR -1
-# define SCREEN_WIDTH	640
-# define SCREEN_HEIGHT	480
+# define SCREEN_WIDTH	1920
+# define SCREEN_HEIGHT	1080
+# define MINIMAP_SCALE	0.25
 # define M_UNIT			0.1		// 이동단위
 # define R_UNIT			M_PI_4/4	// 회전단위
 # define BODY_UNIT		0.1		// 벽과 플레이어와의 최소거리
@@ -86,11 +87,11 @@ typedef struct	s_player
 
 typedef struct	s_texture
 {
-	char		*tex_path_malloc;
-	//int			*texture;
-	t_img		texture;
-	int			width;
-	int			height;
+	char			*tex_path_malloc;
+	unsigned int	*data;
+	t_img			texture;
+	int				width;
+	int				height;
 }	t_texture;
 
 typedef struct	s_map
@@ -111,6 +112,7 @@ typedef struct s_game
 	void	*win;
 	t_img	wall;
 	t_img	screen;
+	t_img	minimap;
 	t_map	*map;
 
 	double	pX;
@@ -144,6 +146,10 @@ typedef struct s_game
 
 	double	step;
 	double	texPos;
+	int		miniW;
+	int		miniH;
+	int		gridW;
+	int		gridH;
 }	t_game;
 
 // 14 *
@@ -186,7 +192,7 @@ int	is_space(char c);
 
 void	player_init(t_game *g);
 void	img_init(t_game *game);
-void	window_init(t_game *game);
+int		window_init(t_game *game);
 
 void	move(t_game *game, double angle);
 void	rotate(t_game *game, double angle);
@@ -203,4 +209,9 @@ void	cal_texture(t_game *g, t_texture wall_tex);
 void		drawLine(t_game *g, t_texture wall_tex, unsigned int *data, unsigned int *screen, int x);
 void		setScreen(t_game *g, unsigned int *screen);
 t_texture	getWallTexture(t_game *g);
+
+// minimap.c
+void	paint_minimap(t_game *g, unsigned int *minimap);
+void	paint_grid(t_game *g, unsigned int* minimap, int x, int y, int color);
+
 #endif
