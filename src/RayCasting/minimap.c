@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 18:25:40 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 13:23:25 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 16:16:54 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ void	paint_grid(t_game *g, unsigned int *minimap, int y, int x, int color)
 	int	i;
 	int	j;
 
-	i = -1;
+	i = y - 1;
 	while (++i < y + g->gridH)
 	{
-		j = -1;
+		j = x - 1;
 		while (++j < x + g->gridW)
 		{
 			minimap[i * g->miniW + j] = color;

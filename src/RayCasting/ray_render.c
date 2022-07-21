@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ray_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:38:16 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 13:27:55 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 16:16:15 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void drawLine(t_game *g, t_texture wall_tex, unsigned int *data, unsigned int *screen, int x)
+void	drawline(t_game *g, t_texture wall_tex, unsigned int *data, unsigned int *screen, int x)
 {
 	int	color;
 	int	y;
 
-	y = -1;
+	y = g->drawStart - 1;
 	while (++y < g->drawEnd)
 	{
 		g->texY = (int)(g->texPos) & (wall_tex.height - 1);
@@ -29,7 +29,7 @@ void drawLine(t_game *g, t_texture wall_tex, unsigned int *data, unsigned int *s
 	}
 }
 
-void	setScreen(t_game *g, unsigned int *screen)
+void	setscreen(t_game *g, unsigned int *screen)
 {
 	int	y;
 	int	x;
@@ -51,7 +51,7 @@ void	setScreen(t_game *g, unsigned int *screen)
 }
 
 // W E N S
-t_texture	getWallTexture(t_game *g)
+t_texture	getwalltexture(t_game *g)
 {
 	if (g->side == 0)
 	{
