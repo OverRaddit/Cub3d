@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   deal_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/19 19:47:00 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/20 01:33:29 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-//=========================
-// 현재 사용하는 map은 임시 더미맵이다. 파싱한 맵이 아니다.
-//=========================
 static int moveable(t_game *game, double nx, double ny)
 {
 	if (game->map->map_malloc[(int)nx][(int)ny] > '0')
@@ -33,12 +30,12 @@ void	move(t_game *g, double angle)
 	// 이동할 좌표를 구한다.
 	nx = g->pX + (g->dirX * cos(angle) - g->dirY * sin(angle)) * M_UNIT;
 	ny = g->pY + (g->dirX * sin(angle) + g->dirY * cos(angle)) * M_UNIT;
-
 	// 이동할 수 있는 좌표인지 검증 후 최신화한다.
-	// 검증하는 좌표는 왼쪽어개, 오른쪽어깨, 플레이어좌표이다.
 	if (!moveable(g, nx, ny)
 		|| !moveable(g, nx + g->planeX * 1/4, ny + g->planeY * 1/4)
-		|| !moveable(g, nx - g->planeX * 1/4, ny - g->planeY * 1/4))
+		|| !moveable(g, nx - g->planeX * 1/4, ny - g->planeY * 1/4)
+		|| !moveable(g, nx + (g->planeX * cos(M_PI_2) - g->planeY * sin(M_PI_2)) * 1/4, ny + (g->planeX * sin(M_PI_2) + g->planeY * cos(M_PI_2)) * 1/4)
+		|| !moveable(g, nx - (g->planeX * cos(M_PI_2) - g->planeY * sin(M_PI_2)) * 1/4, ny - (g->planeX * sin(M_PI_2) + g->planeY * cos(M_PI_2)) * 1/4))
 		return ;
 	g->pX = nx;
 	g->pY = ny;
@@ -64,8 +61,6 @@ void	rotate(t_game *g, double angle)
 
 int		deal_key(int key_code, t_game *game)
 {
-	// if (key_code == KEY_ESC)
-	// 	closed(3);
 	if (key_code == KEY_ESC)
 		exit_event(game->map);
 	else if (key_code == KEY_UP || key_code == KEY_W)
@@ -80,10 +75,5 @@ int		deal_key(int key_code, t_game *game)
 		rotate(game, -R_UNIT);
 	else if (key_code == KEY_LEFT)
 		rotate(game, R_UNIT);
-	// mlx_put_image_to_window_scale(game->mlx, game->win, game->img.img,
-	// 	1 * 32, 4 * 32, 32, 32,
-	// 	game->px * 64, game->py * 64, 64, 64, 0xFFFFFF);
-	// print_status(game);
-	//printf("Key Event\n");
 	return (0);
 }

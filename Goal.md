@@ -16,3 +16,15 @@
 	- img를 win에 한번에 그린다.
 
 - 맵파일에서 플레이어의 방향좌표에 따른 dir 벡터 초기화. cos, sin을 이용해서 초기화하자.
+
+- Mandatory
+	- Norm
+	- 수식 설명....
+	- 평가준비
+
+- 보너스
+	- [O]벽충돌
+	- 미니맵시스템 : 150 * 150
+	- 마우스로 시점변환 : 쉬워보임 https://kirkim.github.io/42seoul/2021/07/25/mouse_control.html
+	- 여닫을 수 있는 문 -> ....?
+	- animated sprite -> .....???!

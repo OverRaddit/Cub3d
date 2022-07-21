@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/20 00:53:24 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/20 01:15:10 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
 # include "minilibx_opengl_20191021/mlx.h"
+# define _USE_MATH_DEFINES
+# include <math.h>
+# include <string.h> // memset
 
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_EXIT 17
@@ -48,12 +51,19 @@
 # define FALSE 0
 # define TRUE 1
 
-#define LAST 0
+# define LAST 0
+# define NO_COLOR -1
+# define SCREEN_WIDTH	640
+# define SCREEN_HEIGHT	480
+# define M_UNIT			0.1		// 이동단위
+# define R_UNIT			M_PI_4/4	// 회전단위
+# define BODY_UNIT		0.1		// 벽과 플레이어와의 최소거리
 
-#define NO_COLOR -1
-
-#define _USE_MATH_DEFINES
-# include <math.h>
+# define RGB_Red 255*65536+0+0
+# define RGB_Green 0*65536+255*256+0
+# define RGB_Blue 0*65536+0*256+255
+# define RGB_White 255*65536+255*256+255
+# define RGB_Yellow 255*65536+255*256+0
 
 typedef struct s_img
 {
@@ -102,11 +112,7 @@ typedef struct s_game
 	t_img	wall;
 	t_img	screen;
 	t_map	*map;
-	// t_img	tile;
-	// t_img	item;
-	//char		map[10][10];
 
-	// player's Pos, Dir, cameraDir(right)
 	double	pX;
 	double	pY;
 	double	dirX;
@@ -131,6 +137,13 @@ typedef struct s_game
 	int		lineHeight;
 	int		drawStart;
 	int		drawEnd;
+
+	double	wallX;
+	int		texX;
+	int		texY;
+
+	double	step;
+	double	texPos;
 }	t_game;
 
 // 14 *
@@ -171,26 +184,6 @@ int	is_space(char c);
 // Gshim
 //=============================================================================
 
-# define _USE_MATH_DEFINES
-# include <math.h>
-# include <string.h> // memset
-
-
-# define SCREEN_WIDTH	640
-# define SCREEN_HEIGHT	480
-# define M_UNIT			0.1		// 이동단위
-# define R_UNIT			M_PI_4/4	// 회전단위
-# define BODY_UNIT		0.1		// 벽과 플레이어와의 최소거리
-//# define R_UNIT			M_PI / 180	// 회전단위
-
-// color
-//# define RGB_Red 255*65536+255*256+255
-# define RGB_Red 255*65536+0+0
-# define RGB_Green 0*65536+255*256+0
-# define RGB_Blue 0*65536+0*256+255
-# define RGB_White 255*65536+255*256+255
-# define RGB_Yellow 255*65536+255*256+0
-
 void	player_init(t_game *g);
 void	img_init(t_game *game);
 void	window_init(t_game *game);
@@ -204,8 +197,10 @@ void	ray_cal_init(t_game *g, int x);
 void	getSideDist(t_game *g);
 void	DDA(t_game *g);
 void	getDrawPoint(t_game *g);
+void	cal_texture(t_game *g, t_texture wall_tex);
 
 // ray_render.c
+void		drawLine(t_game *g, t_texture wall_tex, unsigned int *data, unsigned int *screen, int x);
 void		setScreen(t_game *g, unsigned int *screen);
 t_texture	getWallTexture(t_game *g);
 #endif
