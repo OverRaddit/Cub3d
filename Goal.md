@@ -28,3 +28,6 @@
 	- 마우스로 시점변환 : 쉬워보임 https://kirkim.github.io/42seoul/2021/07/25/mouse_control.html
 	- 여닫을 수 있는 문 -> ....?
 	- animated sprite -> .....???!
+
+마우스... 마우스휠도 인식?
+https://harm-smits.github.io/42docs/libs/minilibx/hooks.html

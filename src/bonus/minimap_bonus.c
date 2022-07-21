@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minimap.c                                          :+:      :+:    :+:   */
+/*   minimap_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 18:25:40 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 16:16:54 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 18:33:02 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	paint_minimap(t_game *g, unsigned int *minimap)
+void	paint_minimap(t_game *g)
 {
 	int	i;
 	int	j;
@@ -23,33 +23,33 @@ void	paint_minimap(t_game *g, unsigned int *minimap)
 		j = -1;
 		while (++j < g->map->col)
 		{
-			if (i == (int)g->pX && j == (int)g->pY)
-				paint_grid(g, minimap, i * g->gridH, j * g->gridW, RGB_Red);
+			if (i == (int)g->px && j == (int)g->py)
+				paint_grid(g, i * g->gridh, j * g->gridw, RGB_RED);
 			else if (g->map->map_malloc[i][j] == '\0')
 				break ;
 			else if (g->map->map_malloc[i][j] == '0')
-				paint_grid(g, minimap, i * g->gridH, j * g->gridW, RGB_White);
+				paint_grid(g, i * g->gridh, j * g->gridw, RGB_WHITE);
 			else if (g->map->map_malloc[i][j] == '1')
-				paint_grid(g, minimap, i * g->gridH, j * g->gridW, RGB_Green);
+				paint_grid(g, i * g->gridh, j * g->gridw, 0);
 			else
-				paint_grid(g, minimap, i * g->gridH, j * g->gridW, 0);
+				paint_grid(g, i * g->gridh, j * g->gridw, 0);
 		}
 	}
 	mlx_put_image_to_window(g->mlx, g->win, g->minimap.img, 0, 0);
 }
 
-void	paint_grid(t_game *g, unsigned int *minimap, int y, int x, int color)
+void	paint_grid(t_game *g, int y, int x, int color)
 {
 	int	i;
 	int	j;
 
 	i = y - 1;
-	while (++i < y + g->gridH)
+	while (++i < y + g->gridh)
 	{
 		j = x - 1;
-		while (++j < x + g->gridW)
+		while (++j < x + g->gridw)
 		{
-			minimap[i * g->miniW + j] = color;
+			g->minimap_data[i * g->miniw + j] = color;
 		}
 	}
 }

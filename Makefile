@@ -6,12 +6,12 @@
 #    By: gshim <gshim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 21:25:08 by jinyoo            #+#    #+#              #
-#    Updated: 2022/07/20 19:20:19 by gshim            ###   ########.fr        #
+#    Updated: 2022/07/21 18:35:09 by gshim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iinclude -o2
 # -g3 -fsanitize=address
 # -o2 or -o3
 NAME = cub3d
@@ -29,7 +29,8 @@ SRCS =	src/main.c \
 		src/raycasting/deal_key.c \
 		src/raycasting/ray_cal.c \
 		src/raycasting/ray_render.c \
-		src/raycasting/minimap.c
+		src/bonus/minimap_bonus.c \
+		src/bonus/mouse_bonus.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -57,6 +58,8 @@ $(SRCS_DIR)/%.o : $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) -I$(MLX_DIR) -I$(GNL_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
 all : $(NAME)
+
+bonus : $(NAME)
 
 clean :
 	@rm -rf $(OBJS)

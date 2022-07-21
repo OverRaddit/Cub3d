@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:00:36 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 15:28:08 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 18:31:33 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,37 @@
 
 void	ray_cal_init(t_game *g, int x)
 {
-	g->cameraX = 2 * x / (double)(SCREEN_WIDTH - 1) - 1;
-	g->rayDirX = g->dirX + g->planeX * g->cameraX;
-	g->rayDirY = g->dirY + g->planeY * g->cameraX;
-	g->mapX = (int)(g->pX);
-	g->mapY = (int)(g->pY);
-	g->deltaDistX = fabs(1 / g->rayDirX);
-	g->deltaDistY = fabs(1 / g->rayDirY);
+	g->camerax = 2 * x / (double)(SCREEN_WIDTH - 1) - 1;
+	g->raydirx = g->dirx + g->planex * g->camerax;
+	g->raydiry = g->diry + g->planey * g->camerax;
+	g->mapx = (int)(g->px);
+	g->mapy = (int)(g->py);
+	g->deltadistx = fabs(1 / g->raydirx);
+	g->deltadisty = fabs(1 / g->raydiry);
 	g->hit = 0;
 }
 
 void	getsidedist(t_game *g)
 {
-	if (g->rayDirX < 0)
+	if (g->raydirx < 0)
 	{
-		g->stepX = -1;
-		g->sideDistX = (g->pX - g->mapX) * g->deltaDistX;
+		g->stepx = -1;
+		g->sidedistx = (g->px - g->mapx) * g->deltadistx;
 	}
 	else
 	{
-		g->stepX = 1;
-		g->sideDistX = (g->mapX + 1.0 - g->pX) * g->deltaDistX;
+		g->stepx = 1;
+		g->sidedistx = (g->mapx + 1.0 - g->px) * g->deltadistx;
 	}
-	if (g->rayDirY < 0)
+	if (g->raydiry < 0)
 	{
-		g->stepY = -1;
-		g->sideDistY = (g->pY - g->mapY) * g->deltaDistY;
+		g->stepy = -1;
+		g->sidedisty = (g->py - g->mapy) * g->deltadisty;
 	}
 	else
 	{
-		g->stepY = 1;
-		g->sideDistY = (g->mapY + 1.0 - g->pY) * g->deltaDistY;
+		g->stepy = 1;
+		g->sidedisty = (g->mapy + 1.0 - g->py) * g->deltadisty;
 	}
 }
 
@@ -52,51 +52,51 @@ void	dda(t_game *g)
 {
 	while (g->hit == 0)
 	{
-		if (g->sideDistX < g->sideDistY)
+		if (g->sidedistx < g->sidedisty)
 		{
-			g->sideDistX += g->deltaDistX;
-			g->mapX += g->stepX;
+			g->sidedistx += g->deltadistx;
+			g->mapx += g->stepx;
 			g->side = 0;
 		}
 		else
 		{
-			g->sideDistY += g->deltaDistY;
-			g->mapY += g->stepY;
+			g->sidedisty += g->deltadisty;
+			g->mapy += g->stepy;
 			g->side = 1;
 		}
-		if (g->map->map_malloc[g->mapX][g->mapY] > '0')
+		if (g->map->map_malloc[g->mapx][g->mapy] > '0')
 			g->hit = 1;
 	}
 	if (g->side == 0)
-		g->perpWallDist = g->sideDistX - g->deltaDistX;
+		g->perpwalldist = g->sidedistx - g->deltadistx;
 	else
-		g->perpWallDist = g->sideDistY - g->deltaDistY;
+		g->perpwalldist = g->sidedisty - g->deltadisty;
 }
 
 void	getdrawpoint(t_game *g)
 {
-	g->lineHeight = (int)(SCREEN_HEIGHT / g->perpWallDist);
-	g->drawStart = -1 * g->lineHeight / 2 + SCREEN_HEIGHT / 2;
-	if (g->drawStart < 0)
-		g->drawStart = 0;
-	g->drawEnd = g->lineHeight / 2 + SCREEN_HEIGHT / 2;
-	if (g->drawEnd >= SCREEN_HEIGHT)
-		g->drawEnd = SCREEN_HEIGHT - 1;
+	g->lineheight = (int)(SCREEN_HEIGHT / g->perpwalldist);
+	g->drawstart = -1 * g->lineheight / 2 + SCREEN_HEIGHT / 2;
+	if (g->drawstart < 0)
+		g->drawstart = 0;
+	g->drawend = g->lineheight / 2 + SCREEN_HEIGHT / 2;
+	if (g->drawend >= SCREEN_HEIGHT)
+		g->drawend = SCREEN_HEIGHT - 1;
 }
 
 void	cal_texture(t_game *g, t_texture wall_tex)
 {
 	if (g->side == 0)
-		g->wallX = g->pY + g->perpWallDist * g->rayDirY;
+		g->wallx = g->py + g->perpwalldist * g->raydiry;
 	else
-		g->wallX = g->pX + g->perpWallDist * g->rayDirX;
-	g->wallX -= floor((g->wallX));
-	g->texX = (int)(g->wallX * (double)(wall_tex.width));
-	if (g->side == 0 && g->rayDirX > 0)
-		g->texX = wall_tex.width - g->texX - 1;
-	if (g->side == 1 && g->rayDirY < 0)
-		g->texX = wall_tex.width - g->texX - 1;
-	g->step = 1.0 * wall_tex.height / g->lineHeight;
-	g->texPos = (g->drawStart - SCREEN_HEIGHT / 2 + g->lineHeight / 2);
-	g->texPos *= g->step;
+		g->wallx = g->px + g->perpwalldist * g->raydirx;
+	g->wallx -= floor((g->wallx));
+	g->texx = (int)(g->wallx * (double)(wall_tex.width));
+	if (g->side == 0 && g->raydirx > 0)
+		g->texx = wall_tex.width - g->texx - 1;
+	if (g->side == 1 && g->raydiry < 0)
+		g->texx = wall_tex.width - g->texx - 1;
+	g->step = 1.0 * wall_tex.height / g->lineheight;
+	g->texpos = (g->drawstart - SCREEN_HEIGHT / 2 + g->lineheight / 2);
+	g->texpos *= g->step;
 }

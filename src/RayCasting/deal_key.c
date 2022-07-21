@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 15:28:51 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 18:28:54 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	move(t_game *g, double angle)
 	double	nx;
 	double	ny;
 
-	nx = g->pX + (g->dirX * cos(angle) - g->dirY * sin(angle)) * M_UNIT;
-	ny = g->pY + (g->dirX * sin(angle) + g->dirY * cos(angle)) * M_UNIT;
+	nx = g->px + (g->dirx * cos(angle) - g->diry * sin(angle)) * M_UNIT;
+	ny = g->py + (g->dirx * sin(angle) + g->diry * cos(angle)) * M_UNIT;
 	if (!moveable(g, nx, ny)
-		|| !moveable(g, -nx + g->planeX * 0.25, ny + g->planeY * 0.25)
-		|| !moveable(g, nx + g->planeX * 0.25, ny + g->planeY * 0.25)
-		|| !moveable(g, -nx + g->planeX * 0.25, ny - g->planeY * 0.25)
-		|| !moveable(g, nx + g->planeX * 0.25, ny - g->planeY * 0.25))
+		|| !moveable(g, -nx + g->planex * 0.25, ny + g->planey * 0.25)
+		|| !moveable(g, nx + g->planex * 0.25, ny + g->planey * 0.25)
+		|| !moveable(g, -nx + g->planex * 0.25, ny - g->planey * 0.25)
+		|| !moveable(g, nx + g->planex * 0.25, ny - g->planey * 0.25))
 		return ;
-	g->pX = nx;
-	g->pY = ny;
+	g->px = nx;
+	g->py = ny;
 }
 
 void	rotate(t_game *g, double angle)
@@ -49,14 +49,14 @@ void	rotate(t_game *g, double angle)
 	double	tempx;
 	double	tempy;
 
-	tempx = g->dirX;
-	tempy = g->dirY;
-	g->dirX = tempx * cos(angle) - tempy * sin(angle);
-	g->dirY = tempx * sin(angle) + tempy * cos(angle);
-	tempx = g->planeX;
-	tempy = g->planeY;
-	g->planeX = tempx * cos(angle) - tempy * sin(angle);
-	g->planeY = tempx * sin(angle) + tempy * cos(angle);
+	tempx = g->dirx;
+	tempy = g->diry;
+	g->dirx = tempx * cos(angle) - tempy * sin(angle);
+	g->diry = tempx * sin(angle) + tempy * cos(angle);
+	tempx = g->planex;
+	tempy = g->planey;
+	g->planex = tempx * cos(angle) - tempy * sin(angle);
+	g->planey = tempx * sin(angle) + tempy * cos(angle);
 }
 
 int	deal_key(int key_code, t_game *game)
@@ -75,5 +75,7 @@ int	deal_key(int key_code, t_game *game)
 		rotate(game, -R_UNIT);
 	else if (key_code == KEY_LEFT)
 		rotate(game, R_UNIT);
+	else if (key_code == KEY_F)
+		mousemode_toggle(game);
 	return (0);
 }

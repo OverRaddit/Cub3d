@@ -6,18 +6,18 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:09:42 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 16:09:33 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 18:28:03 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	player_init(t_game *g)
+void	game_init(t_game *g)
 {
 	double	angle;
 
-	g->pX = g->map->player.px;
-	g->pY = g->map->player.py;
+	g->px = g->map->player.px;
+	g->py = g->map->player.py;
 	if (g->map->player.starting_sight == 'N')
 		angle = M_PI;
 	else if (g->map->player.starting_sight == 'E')
@@ -26,18 +26,15 @@ void	player_init(t_game *g)
 		angle = 0;
 	else
 		angle = -M_PI_2;
-	g->dirX = cos(angle);
-	g->dirY = sin(angle);
-	g->planeX = 0.66 * cos(angle - M_PI_2);
-	g->planeY = 0.66 * sin(angle - M_PI_2);
-	g->miniW = SCREEN_WIDTH * MINIMAP_SCALE;
-	g->miniH = SCREEN_HEIGHT * MINIMAP_SCALE;
-	g->gridW = g->miniW / g->map->col;
-	g->gridH = g->miniH / g->map->row;
-	printf("map w,h = %d, %d\n", g->map->col, g->map->row);
-	printf("minimap w,h = %d,%d\n", g->miniW, g->miniH);
-	printf("grid w,h = %d,%d\n", g->gridW, g->gridH);
-	printf("%f %f\n", g->dirX, g->dirX);
+	g->dirx = cos(angle);
+	g->diry = sin(angle);
+	g->planex = 0.66 * cos(angle - M_PI_2);
+	g->planey = 0.66 * sin(angle - M_PI_2);
+	g->miniw = SCREEN_WIDTH * MINIMAP_SCALE;
+	g->minih = SCREEN_HEIGHT * MINIMAP_SCALE;
+	g->gridw = g->miniw / g->map->col;
+	g->gridh = g->minih / g->map->row;
+	g->mousemode = 0;
 }
 
 void	img_init(t_game *game)
@@ -54,7 +51,7 @@ void	img_init(t_game *game)
 	tx[3].texture.img = mlx_xpm_file_to_image(game->mlx,
 			tx[3].tex_path_malloc, &(tx[3].width), &(tx[3].height));
 	game->screen.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	game->minimap.img = mlx_new_image(game->mlx, game->miniW, game->miniH);
+	game->minimap.img = mlx_new_image(game->mlx, game->miniw, game->minih);
 }
 
 int	window_init(t_game *game)

@@ -6,12 +6,12 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/21 15:33:26 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 18:27:30 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_3D_H
-# define CUB_3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -36,6 +36,7 @@
 # define KEY_S			1
 # define KEY_D			2
 # define KEY_W			13
+# define KEY_F			3
 
 # define ERROR -1
 # define SUCCESS 1
@@ -57,26 +58,27 @@
 # define SCREEN_HEIGHT	1080
 # define MINIMAP_SCALE	0.25
 # define M_UNIT			0.1		// 이동단위
-# define R_UNIT			M_PI_4/4	// 회전단위
+# define R_UNIT			M_PI_4	// 회전단위
 # define BODY_UNIT		0.1		// 벽과 플레이어와의 최소거리
 
-# define RGB_Red 255*65536+0+0
-# define RGB_Green 0*65536+255*256+0
-# define RGB_Blue 0*65536+0*256+255
-# define RGB_White 255*65536+255*256+255
-# define RGB_Yellow 255*65536+255*256+0
+# define RGB_RED 16711680 // 255*65536+0+0
+# define RGB_GREEN 65280 // 0*65536+255*256+0
+# define RGB_BLUE 255 // 0*65536+0*256+255
+# define RGB_WHITE 16777215 // 255*65536+255*256+255
+# define RGB_YELLOW 16776960 // 255*65536+255*256+0
+
+typedef unsigned int	t_ui;
 
 typedef struct s_img
 {
 	void			*img;
 	unsigned int	*data;
-
 	int				size_l;
 	int				bpp;
 	int				endian;
 }				t_img;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	double	px;
 	double	py;
@@ -85,7 +87,7 @@ typedef struct	s_player
 	char	starting_sight;
 }	t_player;
 
-typedef struct	s_texture
+typedef struct s_texture
 {
 	char			*tex_path_malloc;
 	unsigned int	*data;
@@ -94,7 +96,7 @@ typedef struct	s_texture
 	int				height;
 }	t_texture;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	t_player	player;
 	t_texture	tex[4];
@@ -111,108 +113,114 @@ typedef struct s_game
 	void	*mlx;
 	void	*win;
 	t_img	wall;
+	t_ui	*wall_data;
 	t_img	screen;
+	t_ui	*screen_data;
 	t_img	minimap;
+	t_ui	*minimap_data;
 	t_map	*map;
 
-	double	pX;
-	double	pY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
+	int		mousemode;
 
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-	int		mapX;
-	int		mapY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	int		stepX;
-	int		stepY;
+	double	px;
+	double	py;
+	double	dirx;
+	double	diry;
+	double	planex;
+	double	planey;
+
+	double	camerax;
+	double	raydirx;
+	double	raydiry;
+	int		mapx;
+	int		mapy;
+	double	sidedistx;
+	double	sidedisty;
+	double	deltadistx;
+	double	deltadisty;
+	double	perpwalldist;
+	int		stepx;
+	int		stepy;
 	int		hit;
 	int		side;
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
+	int		lineheight;
+	int		drawstart;
+	int		drawend;
 
-	double	wallX;
-	int		texX;
-	int		texY;
+	double	wallx;
+	int		texx;
+	int		texy;
 
 	double	step;
-	double	texPos;
-	int		miniW;
-	int		miniH;
-	int		gridW;
-	int		gridH;
+	double	texpos;
+	int		miniw;
+	int		minih;
+	int		gridw;
+	int		gridh;
 }	t_game;
 
 //error.c
-int		exit_event(t_map *map);
-void	exit_error(t_map *map, char *message);
-void	free_all_data(t_map *map);
+int			exit_event(t_map *map);
+void		exit_error(t_map *map, char *message);
+void		free_all_data(t_map *map);
 
 //=================================parsing=====================================
 
 //parse.c
-void	parse(t_map *map, char *cub_file_path);
-char	*access_information(char *line);
+void		parse(t_map *map, char *cub_file_path);
+char		*access_information(char *line);
 
 //validation.c
-int	check_valid_data(char *line);
-int	get_cub_file_fd(t_map *map,char *cub_file_path);
+int			check_valid_data(char *line);
+int			get_cub_file_fd(t_map *map, char *cub_file_path);
 
 //parse_color.c
-int	parse_color(t_map *map, char *line, int identifier);
+int			parse_color(t_map *map, char *line, int identifier);
 
 //parse_map.c
-void	parse_map(t_map *map);
-char	*save_tmp_map(char *s1, char *s2);
-int	check_data_order(t_map *map);
+void		parse_map(t_map *map);
+char		*save_tmp_map(char *s1, char *s2);
+int			check_data_order(t_map *map);
 
 //setting.c
-void	map_setting(t_map *map);
-
-//=============================================================================
+void		map_setting(t_map *map);
 
 // util.c
-int	is_upper(char c);
-int	is_space(char c);
-
+int			is_upper(char c);
+int			is_space(char c);
 
 //=============================================================================
 // Gshim
 //=============================================================================
 
 // cub3d_init.c
-void	player_init(t_game *g);
-void	img_init(t_game *game);
-int		window_init(t_game *game);
+void		game_init(t_game *g);
+void		img_init(t_game *game);
+int			window_init(t_game *game);
 
 // deal_key.c
-void	move(t_game *game, double angle);
-void	rotate(t_game *game, double angle);
-int		deal_key(int key_code, t_game *game);
+void		move(t_game *game, double angle);
+void		rotate(t_game *game, double angle);
+int			deal_key(int key_code, t_game *game);
 
 // ray_cal.c
-void	ray_cal_init(t_game *g, int x);
-void	getsidedist(t_game *g);
-void	dda(t_game *g);
-void	getdrawpoint(t_game *g);
-void	cal_texture(t_game *g, t_texture wall_tex);
+void		ray_cal_init(t_game *g, int x);
+void		getsidedist(t_game *g);
+void		dda(t_game *g);
+void		getdrawpoint(t_game *g);
+void		cal_texture(t_game *g, t_texture wall_tex);
 
 // ray_render.c
-void		drawline(t_game *g, t_texture wall_tex, unsigned int *data, unsigned int *screen, int x);
-void		setscreen(t_game *g, unsigned int *screen);
+void		cast_one_ray(t_game *g, int x);
+void		drawline(t_game *g, t_texture wall_tex, int x);
+void		setscreen(t_game *g);
 t_texture	getwalltexture(t_game *g);
 
 // minimap.c
-void	paint_minimap(t_game *g, unsigned int *minimap);
-void	paint_grid(t_game *g, unsigned int* minimap, int x, int y, int color);
+void		paint_minimap(t_game *g);
+void		paint_grid(t_game *g, int x, int y, int color);
 
+// mousemode.c
+void		mouse_event(t_game *g);
+void		mousemode_toggle(t_game *g);
 #endif
