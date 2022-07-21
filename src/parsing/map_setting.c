@@ -3,46 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   map_setting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:13:44 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/20 00:53:49 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 15:29:34 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-// static void	get_dir(t_map *map, char c)
-// {
-// 	if (c == 'N')
-// 	{
-
-// 	}
-// 	if (c == 'S')
-// 	{
-
-// 	}
-// 	if (c == 'E')
-// 	{
-
-// 	}
-// 	if (c == 'W')
-// 	{
-// 		game.dirX = -1;
-// 		game.dirY = 0;
-// 		game.planeX = 0;
-// 		game.planeY = 0.66;
-// 	}
-// }
-
 static void	save_player_position(t_map *map, int x, int y)
 {
 	if (map->player.starting_sight || map->player.px || map->player.py)
 		exit_error(map, "Invalid Map");
-
-	// get_dir  구구현..
 	map->player.starting_sight = map->map_malloc[y][x];
-	// get_dir(&(map->player), map->player.starting_sight);	// set dirx diry
 	map->player.px = (double)y;
 	map->player.py = (double)x;
 	map->map_malloc[y][x] = '0';

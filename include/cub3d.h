@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/21 13:31:22 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 15:33:26 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@
 
 typedef struct s_img
 {
-	void	*img;
-	int		*data;
+	void			*img;
+	unsigned int	*data;
 
-	int		size_l;
-	int		bpp;
-	int		endian;
+	int				size_l;
+	int				bpp;
+	int				endian;
 }				t_img;
 
 typedef struct	s_player
@@ -152,7 +152,6 @@ typedef struct s_game
 	int		gridH;
 }	t_game;
 
-// 14 *
 //error.c
 int		exit_event(t_map *map);
 void	exit_error(t_map *map, char *message);
@@ -190,25 +189,27 @@ int	is_space(char c);
 // Gshim
 //=============================================================================
 
+// cub3d_init.c
 void	player_init(t_game *g);
 void	img_init(t_game *game);
 int		window_init(t_game *game);
 
+// deal_key.c
 void	move(t_game *game, double angle);
 void	rotate(t_game *game, double angle);
 int		deal_key(int key_code, t_game *game);
 
 // ray_cal.c
 void	ray_cal_init(t_game *g, int x);
-void	getSideDist(t_game *g);
-void	DDA(t_game *g);
-void	getDrawPoint(t_game *g);
+void	getsidedist(t_game *g);
+void	dda(t_game *g);
+void	getdrawpoint(t_game *g);
 void	cal_texture(t_game *g, t_texture wall_tex);
 
 // ray_render.c
-void		drawLine(t_game *g, t_texture wall_tex, unsigned int *data, unsigned int *screen, int x);
-void		setScreen(t_game *g, unsigned int *screen);
-t_texture	getWallTexture(t_game *g);
+void		drawline(t_game *g, t_texture wall_tex, unsigned int *data, unsigned int *screen, int x);
+void		setscreen(t_game *g, unsigned int *screen);
+t_texture	getwalltexture(t_game *g);
 
 // minimap.c
 void	paint_minimap(t_game *g, unsigned int *minimap);

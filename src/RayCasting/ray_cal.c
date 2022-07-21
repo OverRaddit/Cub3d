@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cal.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:00:36 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 13:25:48 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 15:28:08 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ray_cal_init(t_game *g, int x)
 {
-	// ?? 분모는 w가 아니라 w-1아닌가?
 	g->cameraX = 2 * x / (double)(SCREEN_WIDTH - 1) - 1;
 	g->rayDirX = g->dirX + g->planeX * g->cameraX;
 	g->rayDirY = g->dirY + g->planeY * g->cameraX;
@@ -25,7 +24,7 @@ void	ray_cal_init(t_game *g, int x)
 	g->hit = 0;
 }
 
-void	getSideDist(t_game *g)
+void	getsidedist(t_game *g)
 {
 	if (g->rayDirX < 0)
 	{
@@ -49,7 +48,7 @@ void	getSideDist(t_game *g)
 	}
 }
 
-void	DDA(t_game *g)
+void	dda(t_game *g)
 {
 	while (g->hit == 0)
 	{
@@ -74,7 +73,7 @@ void	DDA(t_game *g)
 		g->perpWallDist = g->sideDistY - g->deltaDistY;
 }
 
-void	getDrawPoint(t_game *g)
+void	getdrawpoint(t_game *g)
 {
 	g->lineHeight = (int)(SCREEN_HEIGHT / g->perpWallDist);
 	g->drawStart = -1 * g->lineHeight / 2 + SCREEN_HEIGHT / 2;
@@ -98,5 +97,6 @@ void	cal_texture(t_game *g, t_texture wall_tex)
 	if (g->side == 1 && g->rayDirY < 0)
 		g->texX = wall_tex.width - g->texX - 1;
 	g->step = 1.0 * wall_tex.height / g->lineHeight;
-	g->texPos = (g->drawStart - SCREEN_HEIGHT / 2 + g->lineHeight / 2) * g->step;
+	g->texPos = (g->drawStart - SCREEN_HEIGHT / 2 + g->lineHeight / 2);
+	g->texPos *= g->step;
 }

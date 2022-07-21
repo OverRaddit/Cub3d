@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:17:52 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/19 16:23:27 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 15:29:42 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_all_data(t_map *map)
 	}
 }
 
-int		exit_event(t_map *map)
+int	exit_event(t_map *map)
 {
 	ft_putendl_fd("EXIT CUB3D", 0);
 	free_all_data(map);

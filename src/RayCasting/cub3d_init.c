@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:09:42 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 13:20:18 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 16:09:33 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	player_init(t_game *g)
 	g->miniH = SCREEN_HEIGHT * MINIMAP_SCALE;
 	g->gridW = g->miniW / g->map->col;
 	g->gridH = g->miniH / g->map->row;
+	printf("map w,h = %d, %d\n", g->map->col, g->map->row);
+	printf("minimap w,h = %d,%d\n", g->miniW, g->miniH);
+	printf("grid w,h = %d,%d\n", g->gridW, g->gridH);
+	printf("%f %f\n", g->dirX, g->dirX);
 }
 
 void	img_init(t_game *game)
@@ -62,4 +66,5 @@ int	window_init(t_game *game)
 			(int)SCREEN_HEIGHT, "CUB_3D");
 	if (!game->win)
 		return (1);
+	return (0);
 }
