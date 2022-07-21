@@ -3,8 +3,8 @@ SO texture/gold_ore.xpm
 WE texture/iron_ore.xpm
 EA texture/diamond_ore.xpm
 
-F 220,100,0
-C 225,30,0
+F 000,153,255
+C 153,153,153
 
         1111111111111111111111111
         1000000000110000000000001
