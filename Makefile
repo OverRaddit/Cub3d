@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gshim <gshim@student.42.fr>                +#+  +:+       +#+         #
+#    By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 21:25:08 by jinyoo            #+#    #+#              #
-#    Updated: 2022/07/21 18:35:09 by gshim            ###   ########.fr        #
+#    Updated: 2022/07/22 09:50:04 by gshim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -o2
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 # -g3 -fsanitize=address
 # -o2 or -o3
-NAME = cub3d
+NAME = cub3D
 
 SRCS_DIR = src
 SRCS =	src/main.c \
