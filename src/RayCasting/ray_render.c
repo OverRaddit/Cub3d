@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:38:16 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 18:32:12 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/22 09:52:41 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	setscreen(t_game *g)
 		while (++x < SCREEN_WIDTH)
 		{
 			if (y < SCREEN_HEIGHT / 2)
-				g->screen_data[y * SCREEN_WIDTH + x] = g->map->floor_color;
-			else if (y > SCREEN_HEIGHT / 2)
 				g->screen_data[y * SCREEN_WIDTH + x] = g->map->ceiling_color;
+			else if (y > SCREEN_HEIGHT / 2)
+				g->screen_data[y * SCREEN_WIDTH + x] = g->map->floor_color;
 			else
 				g->screen_data[y * SCREEN_WIDTH + x] = 0;
 		}
