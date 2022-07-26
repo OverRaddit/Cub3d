@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_setting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:13:44 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/21 15:29:34 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/26 16:50:30 by jinyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	save_player_position(t_map *map, int x, int y)
 
 static int	setting_handler(t_map *map, int x, int y)
 {
-	if (x == 0 || x == (int)ft_strlen(map->map_malloc[y]) || \
+	if (x == 0 || x == (int)ft_strlen(map->map_malloc[y]) - 1|| \
 	y == 0 || y == map->row - 1)
 		return (ERROR);
 	if (map->map_malloc[y][x + 1] == ' ' || map->map_malloc[y][x - 1] == ' ')
