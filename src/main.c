@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinyoo <jinyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/26 16:52:41 by jinyoo           ###   ########.fr       */
+/*   Updated: 2022/07/30 11:19:04 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ int	main_loop(t_game *g)
 	int	x;
 
 	mlx_clear_window(g->mlx, g->win);
-	g->screen_data = (t_ui *)mlx_get_data_addr(g->screen.img, &(g->screen.bpp),
-			&(g->screen.size_l), &(g->screen.endian));
 	setscreen(g);
-	g->minimap_data = (t_ui *)mlx_get_data_addr(g->minimap.img,
-			&(g->minimap.bpp), &(g->minimap.size_l), &(g->minimap.endian));
 	if (g->mousemode)
 		mouse_event(g);
 	x = -1;

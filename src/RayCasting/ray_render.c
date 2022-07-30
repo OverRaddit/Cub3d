@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:38:16 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/22 09:52:41 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 11:29:59 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	cast_one_ray(t_game *g, int x)
 	dda(g);
 	getdrawpoint(g);
 	wall_tex = getwalltexture(g);
-	g->wall_data = (t_ui *)mlx_get_data_addr(wall_tex.texture.img,
+	wall_tex.data = (t_ui *)mlx_get_data_addr(wall_tex.texture.img,
 			&(wall_tex.texture.bpp), &(wall_tex.texture.size_l),
 			&(wall_tex.texture.endian));
-	cal_texture(g, wall_tex);
-	drawline(g, wall_tex, x);
+	cal_texture(g, &wall_tex);
+	drawline(g, &wall_tex, x);
 }
 
-void	drawline(t_game *g, t_texture wall_tex, int x)
+void	drawline(t_game *g, t_texture *wall_tex, int x)
 {
 	int	color;
 	int	y;
@@ -36,12 +36,12 @@ void	drawline(t_game *g, t_texture wall_tex, int x)
 	y = g->drawstart - 1;
 	while (++y < g->drawend)
 	{
-		g->texy = (int)(g->texpos) & (wall_tex.height - 1);
+		g->texy = (int)(g->texpos) & (wall_tex->height - 1);
 		g->texpos += g->step;
-		color = g->wall_data[wall_tex.height * g->texy + g->texx];
+		color = wall_tex->data[wall_tex->height * g->texy + g->texx];
 		if (g->side == 1)
 			color = (color >> 1) & 8355711;
-		g->screen_data[y * SCREEN_WIDTH + x] = color;
+		g->screen.data[y * SCREEN_WIDTH + x] = color;
 	}
 }
 
@@ -57,11 +57,11 @@ void	setscreen(t_game *g)
 		while (++x < SCREEN_WIDTH)
 		{
 			if (y < SCREEN_HEIGHT / 2)
-				g->screen_data[y * SCREEN_WIDTH + x] = g->map->ceiling_color;
+				g->screen.data[y * SCREEN_WIDTH + x] = g->map->ceiling_color;
 			else if (y > SCREEN_HEIGHT / 2)
-				g->screen_data[y * SCREEN_WIDTH + x] = g->map->floor_color;
+				g->screen.data[y * SCREEN_WIDTH + x] = g->map->floor_color;
 			else
-				g->screen_data[y * SCREEN_WIDTH + x] = 0;
+				g->screen.data[y * SCREEN_WIDTH + x] = 0;
 		}
 	}
 }

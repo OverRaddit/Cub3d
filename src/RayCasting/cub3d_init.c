@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:09:42 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 18:28:03 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 11:18:31 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,25 @@ void	game_init(t_game *g)
 	g->mousemode = 0;
 }
 
-void	img_init(t_game *game)
+void	img_init(t_game *g)
 {
 	t_texture	*tx;
 
-	tx = game->map->tex;
-	tx[0].texture.img = mlx_xpm_file_to_image(game->mlx,
+	tx = g->map->tex;
+	tx[0].texture.img = mlx_xpm_file_to_image(g->mlx,
 			tx[0].tex_path_malloc, &(tx[0].width), &(tx[0].height));
-	tx[1].texture.img = mlx_xpm_file_to_image(game->mlx,
+	tx[1].texture.img = mlx_xpm_file_to_image(g->mlx,
 			tx[1].tex_path_malloc, &(tx[1].width), &(tx[1].height));
-	tx[2].texture.img = mlx_xpm_file_to_image(game->mlx,
+	tx[2].texture.img = mlx_xpm_file_to_image(g->mlx,
 			tx[2].tex_path_malloc, &(tx[2].width), &(tx[2].height));
-	tx[3].texture.img = mlx_xpm_file_to_image(game->mlx,
+	tx[3].texture.img = mlx_xpm_file_to_image(g->mlx,
 			tx[3].tex_path_malloc, &(tx[3].width), &(tx[3].height));
-	game->screen.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	game->minimap.img = mlx_new_image(game->mlx, game->miniw, game->minih);
+	g->screen.img = mlx_new_image(g->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	g->screen.data = (t_ui *)mlx_get_data_addr(g->screen.img,
+			&(g->screen.bpp), &(g->screen.size_l), &(g->screen.endian));
+	g->minimap.img = mlx_new_image(g->mlx, g->miniw, g->minih);
+	g->minimap.data = (t_ui *)mlx_get_data_addr(g->minimap.img,
+			&(g->minimap.bpp), &(g->minimap.size_l), &(g->minimap.endian));
 }
 
 int	window_init(t_game *game)

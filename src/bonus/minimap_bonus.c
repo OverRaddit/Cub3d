@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 18:25:40 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 18:33:02 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 11:19:17 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	paint_grid(t_game *g, int y, int x, int color)
 		j = x - 1;
 		while (++j < x + g->gridw)
 		{
-			g->minimap_data[i * g->miniw + j] = color;
+			g->minimap.data[i * g->miniw + j] = color;
 		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/21 18:27:30 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 11:30:05 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@
 
 # define LAST 0
 # define NO_COLOR -1
-# define SCREEN_WIDTH	1920
-# define SCREEN_HEIGHT	1080
+# define SCREEN_WIDTH	640
+# define SCREEN_HEIGHT	480
 # define MINIMAP_SCALE	0.25
 # define M_UNIT			0.1		// 이동단위
 # define R_UNIT			M_PI_4	// 회전단위
@@ -113,11 +113,8 @@ typedef struct s_game
 	void	*mlx;
 	void	*win;
 	t_img	wall;
-	t_ui	*wall_data;
 	t_img	screen;
-	t_ui	*screen_data;
 	t_img	minimap;
-	t_ui	*minimap_data;
 	t_map	*map;
 
 	int		mousemode;
@@ -208,11 +205,11 @@ void		ray_cal_init(t_game *g, int x);
 void		getsidedist(t_game *g);
 void		dda(t_game *g);
 void		getdrawpoint(t_game *g);
-void		cal_texture(t_game *g, t_texture wall_tex);
+void		cal_texture(t_game *g, t_texture *wall_tex);
 
 // ray_render.c
 void		cast_one_ray(t_game *g, int x);
-void		drawline(t_game *g, t_texture wall_tex, int x);
+void		drawline(t_game *g, t_texture *wall_tex, int x);
 void		setscreen(t_game *g);
 t_texture	getwalltexture(t_game *g);
 
