@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/30 12:31:59 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 15:07:59 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	main_loop(t_game *g)
 		mouse_event(g);
 	if (g->w || g->a || g->s || g->d)
 		move_event(g);
+	if (g->l || g->r)
+		rotation_event(g);
 	x = -1;
 	while (++x < SCREEN_WIDTH)
 		cast_one_ray(g, x);

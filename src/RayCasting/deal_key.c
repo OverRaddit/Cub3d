@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/30 12:23:04 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 15:10:06 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int	e_keydown(int key_code, t_game *game)
 	else if (key_code == KEY_D)
 		game->d = true;
 	else if (key_code == KEY_RIGHT)
-		rotate(game, -R_UNIT);
+		game->r = true;
 	else if (key_code == KEY_LEFT)
-		rotate(game, R_UNIT);
+		game->l = true;
 	else if (key_code == KEY_F)
 		mousemode_toggle(game);
 	return (0);
@@ -92,10 +92,10 @@ int	e_keyup(int key_code, t_game *game)
 		game->a = false;
 	else if (key_code == KEY_D)
 		game->d = false;
-	// else if (key_code == KEY_RIGHT)
-	// 	rotate(game, -R_UNIT);
-	// else if (key_code == KEY_LEFT)
-	// 	rotate(game, R_UNIT);
+	else if (key_code == KEY_RIGHT)
+		game->r = false;
+	else if (key_code == KEY_LEFT)
+		game->l = false;
 	// else if (key_code == KEY_F)
 	// 	mousemode_toggle(game);
 	return (0);

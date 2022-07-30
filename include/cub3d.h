@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/30 12:22:09 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 15:11:08 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@
 # define SCREEN_HEIGHT	480
 # define MINIMAP_SCALE	0.25
 # define M_UNIT			0.1		// 이동단위
-# define R_UNIT			M_PI_4	// 회전단위
+# define R_UNIT			0.1		//M_PI_4	// 회전단위
 # define BODY_UNIT		0.1		// 벽과 플레이어와의 최소거리
 
 # define RGB_RED 16711680 // 255*65536+0+0
@@ -124,6 +124,8 @@ typedef struct s_game
 	bool	a;
 	bool	s;
 	bool	d;
+	bool	l;
+	bool	r;
 
 	double	px;
 	double	py;
@@ -229,6 +231,7 @@ void		mouse_event(t_game *g);
 void		mousemode_toggle(t_game *g);
 
 // move.c
+void		rotation_event(t_game *g);
 void		move_event(t_game *g);
 
 #endif
