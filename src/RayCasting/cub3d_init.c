@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 20:09:42 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/30 11:18:31 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 11:42:20 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void	game_init(t_game *g)
 	g->mousemode = 0;
 }
 
-void	img_init(t_game *g)
+static void	texture_init(t_game *g)
 {
 	t_texture	*tx;
+	int			i;
 
 	tx = g->map->tex;
 	tx[0].texture.img = mlx_xpm_file_to_image(g->mlx,
@@ -50,6 +51,20 @@ void	img_init(t_game *g)
 			tx[2].tex_path_malloc, &(tx[2].width), &(tx[2].height));
 	tx[3].texture.img = mlx_xpm_file_to_image(g->mlx,
 			tx[3].tex_path_malloc, &(tx[3].width), &(tx[3].height));
+	i = -1;
+	while (++i < 4)
+	{
+		if (tx[i].tex_path_malloc)
+		{
+			free(tx[i].tex_path_malloc);
+			tx[i].tex_path_malloc = NULL;
+		}
+	}
+}
+
+void	img_init(t_game *g)
+{
+	texture_init(g);
 	g->screen.img = mlx_new_image(g->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	g->screen.data = (t_ui *)mlx_get_data_addr(g->screen.img,
 			&(g->screen.bpp), &(g->screen.size_l), &(g->screen.endian));
