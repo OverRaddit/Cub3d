@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   deal_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 18:28:54 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 12:23:04 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,44 @@ void	rotate(t_game *g, double angle)
 	g->planey = tempx * sin(angle) + tempy * cos(angle);
 }
 
-int	deal_key(int key_code, t_game *game)
+int	e_keydown(int key_code, t_game *game)
 {
 	if (key_code == KEY_ESC)
 		exit_event(game->map);
 	else if (key_code == KEY_UP || key_code == KEY_W)
-		move(game, 0);
+		game->w = true;
 	else if (key_code == KEY_DOWN || key_code == KEY_S)
-		move(game, M_PI);
+		game->s = true;
 	else if (key_code == KEY_A)
-		move(game, M_PI_2);
+		game->a = true;
 	else if (key_code == KEY_D)
-		move(game, -M_PI_2);
+		game->d = true;
 	else if (key_code == KEY_RIGHT)
 		rotate(game, -R_UNIT);
 	else if (key_code == KEY_LEFT)
 		rotate(game, R_UNIT);
 	else if (key_code == KEY_F)
 		mousemode_toggle(game);
+	return (0);
+}
+
+int	e_keyup(int key_code, t_game *game)
+{
+	// if (key_code == KEY_ESC)
+	// 	exit_event(game->map);
+	if (key_code == KEY_UP || key_code == KEY_W)
+		game->w = false;
+	else if (key_code == KEY_DOWN || key_code == KEY_S)
+		game->s = false;
+	else if (key_code == KEY_A)
+		game->a = false;
+	else if (key_code == KEY_D)
+		game->d = false;
+	// else if (key_code == KEY_RIGHT)
+	// 	rotate(game, -R_UNIT);
+	// else if (key_code == KEY_LEFT)
+	// 	rotate(game, R_UNIT);
+	// else if (key_code == KEY_F)
+	// 	mousemode_toggle(game);
 	return (0);
 }

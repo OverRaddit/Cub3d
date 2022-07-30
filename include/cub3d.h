@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/30 11:30:05 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 12:22:09 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <unistd.h>
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
@@ -24,8 +25,9 @@
 # include <math.h>
 # include <string.h> // memset
 
-# define X_EVENT_KEY_PRESS 2
-# define X_EVENT_KEY_EXIT 17
+# define X_EVENT_KEY_DOWN	2
+# define X_EVENT_KEY_UP		3
+# define X_EVENT_KEY_EXIT	17
 
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
@@ -118,6 +120,10 @@ typedef struct s_game
 	t_map	*map;
 
 	int		mousemode;
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
 
 	double	px;
 	double	py;
@@ -198,7 +204,8 @@ int			window_init(t_game *game);
 // deal_key.c
 void		move(t_game *game, double angle);
 void		rotate(t_game *game, double angle);
-int			deal_key(int key_code, t_game *game);
+int			e_keydown(int key_code, t_game *game);
+int			e_keyup(int key_code, t_game *game);
 
 // ray_cal.c
 void		ray_cal_init(t_game *g, int x);
@@ -220,4 +227,8 @@ void		paint_grid(t_game *g, int x, int y, int color);
 // mousemode.c
 void		mouse_event(t_game *g);
 void		mousemode_toggle(t_game *g);
+
+// move.c
+void		move_event(t_game *g);
+
 #endif
