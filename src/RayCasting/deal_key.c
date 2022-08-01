@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:50:11 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/30 15:10:06 by gshim            ###   ########.fr       */
+/*   Updated: 2022/08/01 14:38:23 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	e_keydown(int key_code, t_game *game)
 
 int	e_keyup(int key_code, t_game *game)
 {
-	// if (key_code == KEY_ESC)
-	// 	exit_event(game->map);
 	if (key_code == KEY_UP || key_code == KEY_W)
 		game->w = false;
 	else if (key_code == KEY_DOWN || key_code == KEY_S)
@@ -96,7 +94,5 @@ int	e_keyup(int key_code, t_game *game)
 		game->r = false;
 	else if (key_code == KEY_LEFT)
 		game->l = false;
-	// else if (key_code == KEY_F)
-	// 	mousemode_toggle(game);
 	return (0);
 }

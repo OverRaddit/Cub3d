@@ -6,7 +6,7 @@
 /*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:38:16 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/30 11:29:59 by gshim            ###   ########.fr       */
+/*   Updated: 2022/08/01 14:42:37 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,10 @@ void	setscreen(t_game *g)
 		x = -1;
 		while (++x < SCREEN_WIDTH)
 		{
-			if (y < SCREEN_HEIGHT / 2)
+			if (y <= SCREEN_HEIGHT / 2)
 				g->screen.data[y * SCREEN_WIDTH + x] = g->map->ceiling_color;
 			else if (y > SCREEN_HEIGHT / 2)
 				g->screen.data[y * SCREEN_WIDTH + x] = g->map->floor_color;
-			else
-				g->screen.data[y * SCREEN_WIDTH + x] = 0;
 		}
 	}
 }
