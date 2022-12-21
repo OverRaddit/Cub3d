@@ -6,13 +6,13 @@
 /*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 18:25:40 by gshim             #+#    #+#             */
-/*   Updated: 2022/07/21 18:33:02 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/21 19:40:03 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	paint_minimap(t_game *g)
+void	spaint_minimap(t_game *g)
 {
 	int	i;
 	int	j;
