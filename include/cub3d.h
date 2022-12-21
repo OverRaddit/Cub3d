@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:18:19 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/21 18:27:30 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 15:11:08 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <unistd.h>
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
@@ -24,8 +25,9 @@
 # include <math.h>
 # include <string.h> // memset
 
-# define X_EVENT_KEY_PRESS 2
-# define X_EVENT_KEY_EXIT 17
+# define X_EVENT_KEY_DOWN	2
+# define X_EVENT_KEY_UP		3
+# define X_EVENT_KEY_EXIT	17
 
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
@@ -54,11 +56,11 @@
 
 # define LAST 0
 # define NO_COLOR -1
-# define SCREEN_WIDTH	1920
-# define SCREEN_HEIGHT	1080
+# define SCREEN_WIDTH	640
+# define SCREEN_HEIGHT	480
 # define MINIMAP_SCALE	0.25
 # define M_UNIT			0.1		// 이동단위
-# define R_UNIT			M_PI_4	// 회전단위
+# define R_UNIT			0.1		//M_PI_4	// 회전단위
 # define BODY_UNIT		0.1		// 벽과 플레이어와의 최소거리
 
 # define RGB_RED 16711680 // 255*65536+0+0
@@ -113,14 +115,17 @@ typedef struct s_game
 	void	*mlx;
 	void	*win;
 	t_img	wall;
-	t_ui	*wall_data;
 	t_img	screen;
-	t_ui	*screen_data;
 	t_img	minimap;
-	t_ui	*minimap_data;
 	t_map	*map;
 
 	int		mousemode;
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
+	bool	l;
+	bool	r;
 
 	double	px;
 	double	py;
@@ -201,18 +206,19 @@ int			window_init(t_game *game);
 // deal_key.c
 void		move(t_game *game, double angle);
 void		rotate(t_game *game, double angle);
-int			deal_key(int key_code, t_game *game);
+int			e_keydown(int key_code, t_game *game);
+int			e_keyup(int key_code, t_game *game);
 
 // ray_cal.c
 void		ray_cal_init(t_game *g, int x);
 void		getsidedist(t_game *g);
 void		dda(t_game *g);
 void		getdrawpoint(t_game *g);
-void		cal_texture(t_game *g, t_texture wall_tex);
+void		cal_texture(t_game *g, t_texture *wall_tex);
 
 // ray_render.c
 void		cast_one_ray(t_game *g, int x);
-void		drawline(t_game *g, t_texture wall_tex, int x);
+void		drawline(t_game *g, t_texture *wall_tex, int x);
 void		setscreen(t_game *g);
 t_texture	getwalltexture(t_game *g);
 
@@ -223,4 +229,9 @@ void		paint_grid(t_game *g, int x, int y, int color);
 // mousemode.c
 void		mouse_event(t_game *g);
 void		mousemode_toggle(t_game *g);
+
+// move.c
+void		rotation_event(t_game *g);
+void		move_event(t_game *g);
+
 #endif

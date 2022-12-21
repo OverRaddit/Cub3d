@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gshim <gshim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gshim <gshim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:50:46 by jinyoo            #+#    #+#             */
-/*   Updated: 2022/07/21 18:36:09 by gshim            ###   ########.fr       */
+/*   Updated: 2022/07/30 15:07:59 by gshim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	main_loop(t_game *g)
 	int	x;
 
 	mlx_clear_window(g->mlx, g->win);
-	g->screen_data = (t_ui *)mlx_get_data_addr(g->screen.img, &(g->screen.bpp),
-			&(g->screen.size_l), &(g->screen.endian));
 	setscreen(g);
-	g->minimap_data = (t_ui *)mlx_get_data_addr(g->minimap.img,
-			&(g->minimap.bpp), &(g->minimap.size_l), &(g->minimap.endian));
 	if (g->mousemode)
 		mouse_event(g);
+	if (g->w || g->a || g->s || g->d)
+		move_event(g);
+	if (g->l || g->r)
+		rotation_event(g);
 	x = -1;
 	while (++x < SCREEN_WIDTH)
 		cast_one_ray(g, x);
@@ -37,6 +37,7 @@ int	main(int argc, char *argv[])
 	t_map	map;
 	t_game	game;
 
+	ft_memset((void *)&game, 0, sizeof(t_game));
 	game.map = &map;
 	if (argc != 2)
 	{
@@ -49,10 +50,10 @@ int	main(int argc, char *argv[])
 	game_init(&game);
 	window_init(&game);
 	img_init(&game);
-	mlx_hook(game.win, X_EVENT_KEY_PRESS, 0, &deal_key, &game);
+	mlx_hook(game.win, X_EVENT_KEY_DOWN, 0, &e_keydown, &game);
+	mlx_hook(game.win, X_EVENT_KEY_UP, 0, &e_keyup, &game);
 	mlx_hook(game.win, X_EVENT_KEY_EXIT, 0, &exit_event, &map);
 	mlx_loop_hook(game.mlx, &main_loop, &game);
 	mlx_loop(game.mlx);
-	free_all_data(&map);
 	return (0);
 }
